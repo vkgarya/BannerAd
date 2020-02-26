@@ -1,0 +1,95 @@
+<!-- <p>manage-user-list works!</p>
+<a href="javascript:void(0)" routerLink="/admin/add-user">Add User</a> -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div [ngClass]="action === 'list' ? 'col-md-3' : 'col-md-9'">
+                    <app-page-title [pageTitleInfo]="pageTitleInfo"></app-page-title>
+                </div>
+                <div class="col-md-4" *ngIf="action === 'list'">
+                    <app-data-table-search></app-data-table-search>
+                </div>
+                <div class="col-md-5 text-right" *ngIf="action === 'list'">
+                    <app-data-table-column-filter></app-data-table-column-filter>
+                    <button class="btn btn-outline-dark" style="font-size: .8rem;" routerLink="/admin/add-user">Add
+                        User<img src="assets/images/ad_user.png" alt=""> </button>
+                </div>
+
+                <div class="col-md-3 text-right" *ngIf="action === 'edit'">
+                    <button class="btn btn-outline-dark" style="font-size: .8rem;" (click)="backToList()">Manage-Users
+                        List
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="page-body">
+
+            <div class="users-list-container" *ngIf="action === 'list'">
+                <ngx-datatable #table class="material" [rows]="usersList" [columns]="columns" columnMode="flex"
+                    [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10" [rows]="rows">
+                    <ngx-datatable-column *ngFor="let col of columns" [prop]="col.prop" [name]="col.name"
+                        [sortable]="true" [canAutoResize]="true" [resizeable]="true" [flexGrow]="col?.flexSize">
+                        <ng-template ngx-datatable-header-template let-sort="sortFn">
+                            <span>{{ col.name }}</span>
+                        </ng-template>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <div [ngSwitch]="col.prop">
+                                <span *ngSwitchCase="'roles'">{{ renderRoles(row[col.prop]) }}</span>
+                                <span *ngSwitchDefault>{{ row[col.prop] }}</span>
+                              </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Activity" [flexGrow]="1">
+                        <ng-template ngx-datatable-header-template>
+                            <span>Activity</span>
+                        </ng-template>
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span class="pr-2 pointer" (click)="openUserDetailModal(userDetailModal, row)"><img src="assets/images/zoom.png" alt="view" /> View</span>
+                            <span class="pr-2 pointer" (click)="onEditUser(row)"><img src="assets/images/edit.png" alt="view" /> Edit</span>
+                            <span class="pr-2 pointer" (click)="onDeleteUser(row)"><img src="assets/images/delete.png" alt="view" /> Delete</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+            <div class="edit-user-container" *ngIf="action === 'edit'">
+                <app-edit-user [userId]="selectedUser.id" (backToList)="backToList()"></app-edit-user>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <ng-template #userDetailModal>
+        <div class="modal-header modal-background">
+          <h6 class="modal-title pull-left">User Details</h6>
+          <button type="button" class="close pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <tr>
+              <th>Id</th>
+              <td>{{ selectedUser?.id }}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{{ selectedUser?.email }}</td>
+            </tr>
+            <tr>
+              <th>Status</th>
+              <td>{{ selectedUser?.active }}</td>
+            </tr>
+            <tr>
+              <th>Role</th>
+              <td>{{ renderRoles(selectedUser?.roles) }}</td>
+            </tr>
+ 
+      
+          </table>
+      
+        </div>
+      </ng-template>

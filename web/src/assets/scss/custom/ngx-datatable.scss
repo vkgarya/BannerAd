@@ -1,0 +1,53 @@
+.ngx-datatable {
+    .datatable-header {
+        border-bottom: 1px solid $ngxtable-header-border-color !important;
+        border-top: 1px solid $ngxtable-header-border-color;
+
+        .datatable-header-inner {
+            .datatable-header-cell {
+                padding: 10px;
+
+                .datatable-header-cell-label {
+                    color: $app-secondary-color;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .datatable-body {
+        .datatable-row-wrapper {
+            &:not(:last-child) {
+                border-bottom: 1px solid $ngxtable-body-border-color;
+            }
+        }
+        
+        .datatable-scroll {
+            width: 100%;
+        }
+    }
+
+    .datatable-footer {
+        border-top: 1px solid $ngxtable-header-border-color !important;
+    }
+}
+
+.ngx-datatable.material {
+    .datatable-header {
+        .datatable-header-inner {
+            .datatable-header-cell {
+                color: $app-primary-color;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .datatable-body {
+        .datatable-body-row {
+            .datatable-body-cell {
+                font-size: $ngxtable-default-txt-size;
+                padding: 10px;
+            }
+        }
+    }
+}

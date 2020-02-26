@@ -1,0 +1,20 @@
+.table-col-filter-drop-wrapper {
+    display: inline-block;
+
+    .label {
+        font-size: .8rem;
+        margin-right: 5px;
+    }
+
+    .columns-container {
+        padding: 5px;
+    }
+
+    #filterDropdown {
+        font-size: .8rem;
+
+        &::after {
+            vertical-align: 0.1rem;
+        }
+    }
+}

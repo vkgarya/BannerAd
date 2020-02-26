@@ -1,0 +1,53 @@
+<div class="header-container">
+  <div class="header-menu">
+    <div class="app-logo-container">
+      <img class="app-logo" src="assets/images/empay-long-logo.png" alt="Logo" />
+    </div>
+  </div>
+  <div class="topbar-menu">
+    <ul class="topbar-menu-list">
+      <li class="topbar-menu-item">
+        <div ngbDropdown class="d-inline-block">
+          <div class="language-menu-toggler" id="languageMenu" ngbDropdownToggle>
+              <i class="fa fa-chevron-down"></i>
+              <img class="language-country-img" [src]="selectedLanguage?.flagImage" alt="flag"/>
+              <span class="language-label-txt">{{selectedLanguage?.name}}</span>
+          </div>
+          <div ngbDropdownMenu aria-labelledby="languageMenu">
+            <button class="dropdown-item" *ngFor="let language of languages" (click)="onChangeLanguage(language)" ngbDropdownItem><img height="15" width="15" [src]="language?.flagImage"/>
+              <b>{{language?.name}}</b></button>
+          </div>
+        </div>
+      </li>
+      <li class="topbar-menu-item">
+        <img src="assets/images/notification.png" alt="Notification">
+      </li>
+      <li class="topbar-menu-item">
+        <div ngbDropdown class="d-inline-block user-dropdown-menu">
+          <button id="userDropdown" ngbDropdownToggle><img src="assets/images/my-login.png" alt="User Profile" /></button>
+          <div ngbDropdownMenu aria-labelledby="userDropdown">
+            <!-- <form class="px-4 py-3">
+              <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+              </div>
+              <div class="form-group">
+                <label for="exampleDropdownFormPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                <label class="form-check-label" for="dropdownCheck">
+                  Remember me
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+            <div class="dropdown-divider"></div> -->
+            <button ngbDropdownItem (click)="logout()">Logout</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

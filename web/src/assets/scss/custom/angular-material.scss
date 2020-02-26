@@ -1,0 +1,16 @@
+.mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+    background-color: $app-primary-color;
+}
+
+.mat-horizontal-content-container {
+    padding: 20px !important;
+    overflow: visible !important;
+    border: 0;
+    border-radius: .125rem;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+}
+
+.mat-horizontal-stepper-header {
+    height: 45px !important;
+}

@@ -1,0 +1,1025 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col-md-3">
+          <app-page-title [pageTitleInfo]="pageTitleInfo"></app-page-title>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12">
+          <form [formGroup]="couponForm">
+            <mat-horizontal-stepper linear #couponStepper>
+              <!-- [stepControl]="couponForm.get('coupon')" -->
+              <mat-step [editable]="isEditable">
+                <div class="rules-step-form-container">
+                  <ng-template matStepLabel>Coupon</ng-template>
+                  <div class="row" formGroupName="coupon">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group-title-container">
+                            <div class="row align-items-center">
+                              <div class="col-md-5">
+                                <h6 class="form-group-title">Coupon Description *</h6>
+                              </div>
+                              <div class="col-md-5 text-right">
+                                <button class="btn btn-primary btn-sm add-more-btn" (click)="onAddCouponDescription()">+
+                                  Add
+                                  More</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div formArrayName="couponDescriptions">
+                            <ng-container
+                              *ngFor="let couponDescription of couponForm?.get('coupon')?.get('couponDescriptions')?.controls; let i = index">
+                              <div class="row" [formGroupName]="i">
+                                <div class="col-md-5">
+                                  <div class="form-group">
+                                    <select name="language_{{i}}" class="form-control form-control-sm"
+                                      formControlName="language">
+                                      <option value="">Select</option>
+                                      <option value="english">English</option>
+                                      <option value="arabic">Arabic</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="form-group">
+                                    <input type="text" name="description" class="form-control form-control-sm"
+                                      placeholder="Description" formControlName="description" />
+                                  </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <i class="fa fa-trash" (click)="onDeleteCouponDescription(i)"
+                                    *ngIf="couponForm.get('coupon')?.get('couponDescriptions')?.controls?.length > 1"></i>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group-title-container">
+                            <div class="row align-items-center">
+                              <div class="col-md-5">
+                                <h6 class="form-group-title">Coupon Codes *</h6>
+                              </div>
+                              <div class="col-md-5 text-right">
+                                <button class="btn btn-primary btn-sm add-more-btn" (click)="onAddCouponCode()">+ Add
+                                  More</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div formArrayName="couponCodes">
+                            <ng-container
+                              *ngFor="let couponCode of couponForm?.get('coupon')?.get('couponCodes')?.controls; let i = index">
+                              <div class="row" [formGroupName]="i">
+                                <div class="col-md-5">
+                                  <div class="form-group">
+                                    <select name="codelanguage_{{i}}" class="form-control form-control-sm"
+                                      formControlName="language">
+                                      <option value="">Select</option>
+                                      <option value="english">English</option>
+                                      <option value="arabic">Arabic</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="form-group">
+                                    <input type="text" name="couponcode_{{i}}" class="form-control form-control-sm"
+                                      placeholder="Coupon code" formControlName="code" />
+                                  </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <i class="fa fa-trash" (click)="onDeleteCouponCode(i)"
+                                    *ngIf="couponForm?.get('coupon')?.get('couponCodes')?.controls.length > 1"></i>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-xs-12 col-12 col-md-4 form-group mt-3">
+                              <label for="" class="form-group-label">Start and end date</label>
+                              <div class="input-group">
+                                <input type="text" class="form-control form-control-sm" #drp="bsDaterangepicker"
+                                  bsDaterangepicker formControlName="startEndDate" placeholder="dd-mm-yyyy - dd-mm-yyyy"
+                                  readonly>
+                                <div class="input-group-append">
+                                  <span class="input-group-text" (click)="drp.toggle()"
+                                    [attr.aria-expanded]="drp.isOpen"><i class="fa fa-calendar"></i></span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group mt-3">
+                            <mat-checkbox formControlName="allowOtherOffers">Allow other offers</mat-checkbox>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="" class="form-group-label">Coupon Type *</label>
+                                <select name="couponType" class="form-control form-control-sm"
+                                  formControlName="couponType" (change)="onSelectCouponType()">
+                                  <option value="">Select</option>
+                                  <option value="flat">Flat</option>
+                                  <option value="percentage">Percentage</option>
+                                  <option value="offer">Offer</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="" class="form-group-label">Currency</label>
+                                <select name="currency" class="form-control form-control-sm" formControlName="currency">
+                                  <option value="">Select</option>
+                                  <option value="usd">USD</option>
+                                  <option value="aed">AED</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="couponForm?.get('coupon')?.get('couponType')?.value === 'flat'">
+                        <div class="col-md-12">
+                          <div class="row" formGroupName="couponValue">
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="" class="form-group-label">Amount</label>
+                                <input type="text" name="amount" class="form-control form-control-sm"
+                                  formControlName="amount" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="couponForm?.get('coupon')?.get('couponType')?.value === 'percentage'">
+                        <div class="col-md-12">
+                          <div class="row" formGroupName="couponValue">
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="" class="form-group-label">Enter Rebate Value</label>
+                                <input type="text" name="minRebateValue" class="form-control form-control-sm"
+                                  formControlName="minRebateValue" placeholder="%" />
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label for="" class="form-group-label">Max Rebate Value</label>
+                                <input type="text" name="maxRebateValue" class="form-control form-control-sm"
+                                  formControlName="maxRebateValue" placeholder="Enter value" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 27/01/2020 by akbar-->
+                      <div class="form-group-title-container">
+                        <div class="row">
+                          <div class="col-md-12 mt-3">
+                            <h6 for="" class="form-group-title">Limit</h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row align-items-center" formGroupName="limit">
+                        <div class="col-md-4">
+                          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                            formControlName="maxType">
+                            <mat-radio-button value="couponcount">
+                              Max coupon count
+                            </mat-radio-button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <mat-radio-button value="amount">
+                              Max amount
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                        <div class="col-md-6">
+                          <input type="number" placeholder="Enter value" class="form-control form-control-sm"
+                            formControlName="value" />
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="" class="form-group-label">Min Cart Value</label>
+                            <input type="text" name="minCartValue" class="form-control form-control-sm"
+                              formControlName="minCartValue" placeholder="Min cart value" />
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <!-- 27/01/2020 by akbar -->
+                      <button mat-button matStepperNext (click)="so()">Next</button>
+                    </div>
+                  </div>
+                </div>
+              </mat-step>
+              <mat-step [editable]="isEditable">
+                <div class="rules-step-form-container">
+                  <form [formGroup]="offerRuleForm">
+                    <ng-template matStepLabel>Offer</ng-template>
+                    <label for="">Rule Builder</label>
+                    <div style="padding: 10px">
+                      <div formGroupName="if">
+                        <label for="">IF</label>
+                        <div class="rules-background">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="label-rule-form pl-0">Buy</label> <input
+                                class="form-control form-control-sm d-inline-block" type="number" style="width: 100px;"
+                                formControlName="buy">
+                              <div class="d-inline-block" formGroupName="of">
+                                <label class="label-rule-form">OF</label>
+                                <select class="form-control form-control-sm d-inline-block" name="ifcode"
+                                  formControlName="code" (change)="onSelectOfferCodeInOffer('if')" style="width: 150px">
+                                  <option value="">select</option>
+                                  <option value="sku001">SKU001</option>
+                                  <option value="sku002">SKU002</option>
+                                </select>
+                                <label class="label-rule-form">OR</label>
+                                <input class="form-control form-control-sm d-inline-block" type="text" name="ifskuocde"
+                                  placeholder="Enter SKU" formControlName="manualcode"
+                                  (keyup)="onSkuCodeEnteredInOffer('if')" style="width: 100px">
+                                <label class="label-rule-form">OR</label>
+                                <input type="file" name="iffile" formControlName="file"
+                                  (change)="onChooseFileInOffer('if')" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div formGroupName="then">
+                        <label for="">THEN</label>
+                        <div class="rules-background">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="label-rule-form pl-0">Get</label> <input
+                                class="form-control form-control-sm d-inline-block" type="number" style="width: 100px;"
+                                formControlName="get">
+
+                              <div class="d-inline-block" formGroupName="of">
+                                <label class="label-rule-form">OF</label>
+                                <select class="form-control form-control-sm d-inline-block" name="thencode"
+                                  formControlName="code" (change)="onSelectOfferCodeInOffer('then')"
+                                  style="width: 150px">
+                                  <option value="">select</option>
+                                  <option value="sku001">SKU001</option>
+                                  <option value="sku002">SKU002</option>
+                                </select> <label class="label-rule-form">OR</label>
+                                <input class="form-control form-control-sm d-inline-block" type="text"
+                                  placeholder="Enter SKU" name="thenskucode" formControlName="manualcode"
+                                  style="width: 100px" />
+                                <label for="" class="label-rule-form">OR</label>
+                                <input type="file" name="thenfile" formControlName="file"
+                                  (change)="onChooseFileInOffer('then')">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <button class="btn add-rule-btn" type="button" (click)="onAddNewOfferRule()"
+                          [disabled]="!offerRuleForm.valid">Add
+                          Rule</button>
+                      </div>
+                    </div>
+                    <div class="row"
+                      *ngIf="ruleBook?.offer?.length > 0 || ruleBook?.discount?.length > 0 || ruleBook?.calendarBased?.length > 0 || ruleBook?.transactionBased?.length > 0 || ruleBook?.productRestrictions?.length > 0">
+                      <div class="col-md-12">
+                        <div class="rule-book-container">
+                          <h6>Rules</h6>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="offer-rule-container" *ngIf="ruleBook?.offer?.length > 0">
+                                <label>Offer Rules</label>
+                                <div class="row" *ngFor="let offerRule of ruleBook?.offer">
+                                  <div class="col-md-12">
+                                    <b>IF</b> BUY {{ offerRule?.if?.buy }} OF
+                                    {{ offerRule?.if?.of?.code }}{{ offerRule?.if?.of?.manualcode }}{{ offerRule?.if?.of?.file }}
+                                    <b>THEN</b> GET {{ offerRule?.then?.get }} OF
+                                    {{ offerRule?.then?.of?.code }}{{ offerRule?.then?.of?.manualcode }}{{ offerRule?.then?.of?.file }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="discount-rule-container" *ngIf="ruleBook?.discount?.length > 0">
+                                <label>Discount Rules</label>
+                                <div class="row" *ngFor="let discountRule of ruleBook?.discount">
+                                  <div class="col-md-12">
+                                    <b>IF</b> SPENDS BETWEEN AED {{ discountRule?.if?.minSpend }} AND AED
+                                    {{ discountRule?.if?.maxSpend }} IN
+                                    {{ discountRule?.if?.noOfTransactions }} transactions <b>THEN</b> GET
+                                    {{ (discountRule?.then?.discount !== '') ? discountRule?.then?.discount + '% discount' : 'AED ' + discountRule?.then?.amount + ' OFF' }}
+                                    AND Max Discount {{ discountRule?.and?.maxDiscount }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="calendar-based-rule-container" *ngIf="ruleBook?.calendarBased?.length > 0">
+                                <label>Calendar Based Rules</label>
+                                <div class="row" *ngFor="let calendarBasedRule of ruleBook?.calendarBased">
+                                  <div class="col-md-12">
+                                    <b>IF</b> TIME BETWEEN {{ calendarBasedRule?.if?.startTime }} AND
+                                    {{ calendarBasedRule?.if?.endTime }} OF {{ calendarBasedRule?.if?.date }} OF Sun,
+                                    Mon days <b>AND</b> SKU purchased
+                                    {{ calendarBasedRule?.and?.code }}{{ calendarBasedRule?.and?.manualcode }}{{ calendarBasedRule?.and?.file }}
+                                    <b>THEN</b> GET
+                                    {{ (calendarBasedRule?.then?.discount !== '') ? calendarBasedRule?.then?.discount + '% discount' : 'AED ' + calendarBasedRule?.then?.amount + ' OFF' }}
+                                    AND {{ calendarBasedRule?.then?.maxDiscount }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="transaction-rule-container" *ngIf="ruleBook?.transactionBased?.length > 0">
+                                <label>Transaction Based Rules</label>
+                                <div class="row" *ngFor="let transactionBasedRule of ruleBook?.transactionBased">
+                                  <div class="col-md-12">
+                                    {{ transactionBasedRule?.eventType }} in last
+                                    {{ transactionBasedRule?.noOfLastTransactions }} Day(s)
+                                    {{ transactionBasedRule?.products[0].product }}
+                                    {{ transactionBasedRule?.products[0].condition }}
+                                    {{ transactionBasedRule?.products[0].productQuantity }}
+                                    {{ transactionBasedRule?.logicalCond }}
+                                    {{ transactionBasedRule?.products[1].product }}
+                                    {{ transactionBasedRule?.products[1].condition }}
+                                    {{ transactionBasedRule?.products[1].productQuantity }}
+                                    {{ transactionBasedRule?.couponPriority }} {{ transactionBasedRule?.couponCount }}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-12 text-center">
+                              <button class="btn form-submit-btn review-btn" type="button"
+                                (click)="openRuleReviewModal(template)">Review</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                    <div>
+                      <button mat-button matStepperNext (click)="so()">Next</button>
+                    </div>
+                  </form>
+                </div>
+              </mat-step>
+              <mat-step [editable]="isEditable">
+                <div class="rules-step-form-container">
+                  <form [formGroup]="discountRuleForm">
+                    <ng-template matStepLabel>Discount</ng-template>
+                    <label for="">Rule Builder</label>
+                    <div style="padding: 10px">
+                      <div formGroupName="if">
+                        <label for="">IF</label>
+                        <div class="rules-background">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="label-rule-form pl-0">Spends Between</label><input
+                                class="form-control form-control-sm d-inline-block" type="number" placeholder="AED"
+                                style="width: 100px;" formControlName="minSpend">
+                              <label class="label-rule-form">AND</label>
+                              <input type="number" class="form-control form-control-sm d-inline-block" placeholder="AED"
+                                style="width: 100px;" formControlName="maxSpend">
+                              <label class="label-rule-form">IN</label><input
+                                class="form-control form-control-sm d-inline-block" type="number"
+                                placeholder="No. of transactions" style="width: 120px;"
+                                formControlName="noOfTransactions">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div formGroupName="then">
+                        <label for="">THEN</label>
+                        <div class="rules-background">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="label-rule-form pl-0">Get</label>
+                              <input class="form-control form-control-sm d-inline-block" type="number"
+                                placeholder="%Discount" style="width: 150px;" formControlName="discount"
+                                (keyup)="onEnterDiscountInDiscountForm()">
+                              <label class="label-rule-form">OR</label><input
+                                class="form-control form-control-sm d-inline-block" type="number" placeholder="AED"
+                                style="width: 150px;" formControlName="amount"
+                                (keyup)="onEnterAmountInDiscountForm()">&nbsp;
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div formGroupName="and">
+                        <label for="">AND</label>
+                        <div class="rules-background">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="label-rule-form pl-0">Max Discount</label><input
+                                class="form-control form-control-sm d-inline-block" type="number" placeholder="AED"
+                                style="width: 150px;" formControlName="maxDiscount">&nbsp;
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <br>
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <button class="btn form-submit-btn add-rule-btn" type="button"
+                          [disabled]="!discountRuleForm.valid" (click)="onAddNewDiscountRule()">Add
+                          Rule</button>
+                      </div>
+                    </div>
+
+                    <div class="row"
+                      *ngIf="ruleBook?.offer?.length > 0 || ruleBook?.discount?.length > 0 || ruleBook?.calendarBased?.length > 0 || ruleBook?.transactionBased?.length > 0 || ruleBook?.productRestrictions?.length > 0">
+                      <div class="col-md-12">
+                        <div class="rule-book-container">
+                          <h6>Rules</h6>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="discount-rule-container" *ngIf="ruleBook?.discount?.length > 0">
+                                <label>Discount Rules</label>
+                                <div class="row" *ngFor="let discountRule of ruleBook?.discount">
+                                  <div class="col-md-12">
+                                    <b>IF</b> SPENDS BETWEEN AED {{ discountRule?.if?.minSpend }} AND AED
+                                    {{ discountRule?.if?.maxSpend }} IN
+                                    {{ discountRule?.if?.noOfTransactions }} transactions <b>THEN</b> GET
+                                    {{ (discountRule?.then?.discount !== '') ? discountRule?.then?.discount + '% discount' : 'AED ' + discountRule?.then?.amount + ' OFF' }}
+                                    AND Max Discount {{ discountRule?.and?.maxDiscount }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="offer-rule-container" *ngIf="ruleBook?.offer?.length > 0">
+                                <label>Offer Rules</label>
+                                <div class="row" *ngFor="let offerRule of ruleBook?.offer">
+                                  <div class="col-md-12">
+                                    <b>IF</b> BUY {{ offerRule?.if?.buy }} OF
+                                    {{ offerRule?.if?.of?.code }}{{ offerRule?.if?.of?.manualcode }}{{ offerRule?.if?.of?.file }}
+                                    <b>THEN</b> GET {{ offerRule?.then?.get }} OF
+                                    {{ offerRule?.then?.of?.code }}{{ offerRule?.then?.of?.manualcode }}{{ offerRule?.then?.of?.file }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="calendar-based-rule-container" *ngIf="ruleBook?.calendarBased?.length > 0">
+                                <label>Calendar Based Rules</label>
+                                <div class="row" *ngFor="let calendarBasedRule of ruleBook?.calendarBased">
+                                  <div class="col-md-12">
+                                    <b>IF</b> TIME BETWEEN {{ calendarBasedRule?.if?.startTime }} AND
+                                    {{ calendarBasedRule?.if?.endTime }} OF {{ calendarBasedRule?.if?.date }} OF Sun,
+                                    Mon days <b>AND</b> SKU purchased
+                                    {{ calendarBasedRule?.and?.code }}{{ calendarBasedRule?.and?.manualcode }}{{ calendarBasedRule?.and?.file }}
+                                    <b>THEN</b> GET
+                                    {{ (calendarBasedRule?.then?.discount !== '') ? calendarBasedRule?.then?.discount + '% discount' : 'AED ' + calendarBasedRule?.then?.amount + ' OFF' }}
+                                    AND {{ calendarBasedRule?.then?.maxDiscount }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="transaction-rule-container" *ngIf="ruleBook?.transactionBased?.length > 0">
+                                <label>Transaction Based Rules</label>
+                                <div class="row" *ngFor="let transactionBasedRule of ruleBook?.transactionBased">
+                                  <div class="col-md-12">
+                                    {{ transactionBasedRule?.eventType }} in last
+                                    {{ transactionBasedRule?.noOfLastTransactions }} Day(s)
+                                    {{ transactionBasedRule?.products[0].product }}
+                                    {{ transactionBasedRule?.products[0].condition }}
+                                    {{ transactionBasedRule?.products[0].productQuantity }}
+                                    {{ transactionBasedRule?.logicalCond }}
+                                    {{ transactionBasedRule?.products[1].product }}
+                                    {{ transactionBasedRule?.products[1].condition }}
+                                    {{ transactionBasedRule?.products[1].productQuantity }}
+                                    {{ transactionBasedRule?.couponPriority }} {{ transactionBasedRule?.couponCount }}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-12 text-center">
+                              <button class="btn form-submit-btn review-btn" type="button"
+                                (click)="openRuleReviewModal(template)">Review</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <button mat-button matStepperPrevious>Back</button>
+                      <button mat-button matStepperNext>Next</button>
+                    </div>
+                  </form>
+                </div>
+              </mat-step>
+              <mat-step>
+                <div class="rules-step-form-container">
+                  <form [formGroup]="calendarBasedRuleForm">
+                    <ng-template matStepLabel>Calendar Based</ng-template>
+                    <label for="">Rule Builder</label>
+                    <div style="padding: 10px;">
+
+                      <div formGroupName="if">
+                        <label for="">IF</label>
+                        <div class="rules-background">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="label-rule-form pl-0">Time Between</label> <input class="form-control form-control-sm d-inline-block" style="width: 100px;" type="time" name="time" value="22:00"
+                                formControlName="startTime" /> <label class="label-rule-form">AND</label>
+                              <input class="form-control form-control-sm d-inline-block" style="width: 100px;" type="time" name="time" value="22:00" formControlName="endTime" /> <label
+                              class="label-rule-form">OF</label>&nbsp;<input class="form-control form-control-sm d-inline-block" style="width: 150px;" type="date" formControlName="date">
+                              <label class="label-rule-form">OF</label>
+
+                              
+                              <div formArrayName="weekDays">
+                                <ng-container
+                                  *ngFor="let weekday of calendarBasedRuleForm.get('if')?.get('weekDays')?.controls; let i=index;">
+                                  <input type="checkbox" [formControl]="weekday"> {{ weekDays[i] }}
+                                </ng-container>
+                                <input type="checkbox"> All
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <br>
+                    
+                      <div formGroupName="and">
+                        <label for="">AND</label>
+                        <div class="rules-background">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="label-rule-form pl-0">SKU Purchased</label>&nbsp;&nbsp;&nbsp;
+                              <select class="form-control form-control-sm d-inline-block" style="width: 150px;" formControlName="code" (change)="onSelectSkuCodeInCalendarBasedForm()">
+                                <option value="">select SKU</option>
+                                <option value="sku001">SKU001</option>
+                                <option value="sku002">SKU002</option>
+                              </select> &nbsp;&nbsp;&nbsp;<label class="label-rule-form">OR</label>&nbsp;&nbsp;&nbsp;
+                              <input class="form-control form-control-sm d-inline-block" style="width: 150px;" type="number" placeholder="Enter SUK" formControlName="manualcode"
+                                (keyup)="onEnterSkuCodeInCalendarBasedForm()">&nbsp;&nbsp;&nbsp;
+                              <label class="label-rule-form">OR</label>&nbsp;&nbsp;&nbsp;
+                              <input type="file" formControlName="file" (change)="onChooseFileInCalendarBasedForm()" />
+                            </div>
+                          </div>
+                        </div>
+                      
+                      </div>
+                      <br>
+                      
+                      <div formGroupName="then">
+                        <label for="">THEN</label>
+                        <div class="rules-background">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="label-rule-form pl-0">Get</label><input class="form-control form-control-sm d-inline-block" style="width: 150px;" type="number" placeholder="% Discount"
+                                formControlName="discount" (keyup)="onEnterDiscountInCalendarForm()">
+                              &nbsp;&nbsp;&nbsp;<label class="label-rule-form">OR</label>&nbsp;&nbsp;&nbsp; <input class="form-control form-control-sm d-inline-block" style="width: 150px;" type="number"
+                                placeholder="AED" formControlName="amount"
+                                (keyup)="onEnterDiscountAmountInCalendarForm()">&nbsp;&nbsp;&nbsp; <label
+                                class="label-rule-form">and</label>
+                              &nbsp;&nbsp;&nbsp;
+                              <input class="form-control form-control-sm d-inline-block" style="width: 150px;" type="number" placeholder="Max Discount" formControlName="maxDiscount">
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <button class="btn form-submit-btn add-rule-btn" type="button"
+                          [disabled]="!calendarBasedRuleForm.valid" (click)="onAddNewCalendarBasedRule()">Add
+                          Rule</button>
+                      </div>
+                    </div>
+                    <div class="row"
+                      *ngIf="ruleBook?.offer?.length > 0 || ruleBook?.discount?.length > 0 || ruleBook?.calendarBased?.length > 0 || ruleBook?.transactionBased?.length > 0 || ruleBook?.productRestrictions?.length > 0">
+                      <div class="col-md-12">
+                        <div class="rule-book-container">
+                          <h6>Rules</h6>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="calendar-based-rule-container" *ngIf="ruleBook?.calendarBased?.length > 0">
+                                <label>Calendar Based Rules</label>
+                                <div class="row" *ngFor="let calendarBasedRule of ruleBook?.calendarBased">
+                                  <div class="col-md-12">
+                                    <b>IF</b> TIME BETWEEN {{ calendarBasedRule?.if?.startTime }} AND
+                                    {{ calendarBasedRule?.if?.endTime }} OF {{ calendarBasedRule?.if?.date }} OF Sun,
+                                    Mon
+                                    days <b>AND</b> SKU purchased
+                                    {{ calendarBasedRule?.and?.code }}{{ calendarBasedRule?.and?.manualcode }}{{ calendarBasedRule?.and?.file }}
+                                    <b>THEN</b> GET
+                                    {{ (calendarBasedRule?.then?.discount !== '') ? calendarBasedRule?.then?.discount + '% discount' : 'AED ' + calendarBasedRule?.then?.amount + ' OFF' }}
+                                    AND {{ calendarBasedRule?.then?.maxDiscount }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="discount-rule-container" *ngIf="ruleBook?.discount?.length > 0">
+                                <label>Discount Rules</label>
+                                <div class="row" *ngFor="let discountRule of ruleBook?.discount">
+                                  <div class="col-md-12">
+                                    <b>IF</b> SPENDS BETWEEN AED {{ discountRule?.if?.minSpend }} AND AED
+                                    {{ discountRule?.if?.maxSpend }} IN
+                                    {{ discountRule?.if?.noOfTransactions }} transactions <b>THEN</b> GET
+                                    {{ (discountRule?.then?.discount !== '') ? discountRule?.then?.discount + '% discount' : 'AED ' + discountRule?.then?.amount + ' OFF' }}
+                                    AND Max Discount {{ discountRule?.and?.maxDiscount }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="offer-rule-container" *ngIf="ruleBook?.offer?.length > 0">
+                                <label>Offer Rules</label>
+                                <div class="row" *ngFor="let offerRule of ruleBook?.offer">
+                                  <div class="col-md-12">
+                                    <b>IF</b> BUY {{ offerRule?.if?.buy }} OF
+                                    {{ offerRule?.if?.of?.code }}{{ offerRule?.if?.of?.manualcode }}{{ offerRule?.if?.of?.file }}
+                                    <b>THEN</b> GET {{ offerRule?.then?.get }} OF
+                                    {{ offerRule?.then?.of?.code }}{{ offerRule?.then?.of?.manualcode }}{{ offerRule?.then?.of?.file }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="transaction-rule-container" *ngIf="ruleBook?.transactionBased?.length > 0">
+                                <label>Transaction Based Rules</label>
+                                <div class="row" *ngFor="let transactionBasedRule of ruleBook?.transactionBased">
+                                  <div class="col-md-12">
+                                    {{ transactionBasedRule?.eventType }} in last
+                                    {{ transactionBasedRule?.noOfLastTransactions }} Day(s)
+                                    {{ transactionBasedRule?.products[0].product }}
+                                    {{ transactionBasedRule?.products[0].condition }}
+                                    {{ transactionBasedRule?.products[0].productQuantity }}
+                                    {{ transactionBasedRule?.logicalCond }}
+                                    {{ transactionBasedRule?.products[1].product }}
+                                    {{ transactionBasedRule?.products[1].condition }}
+                                    {{ transactionBasedRule?.products[1].productQuantity }}
+                                    {{ transactionBasedRule?.couponPriority }} {{ transactionBasedRule?.couponCount }}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-12 text-center">
+                              <button class="btn form-submit-btn review-btn" type="button"
+                                (click)="openRuleReviewModal(template)">Review</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <button mat-button matStepperPrevious>Back</button>
+                      <button mat-button matStepperNext>Next</button>
+                    </div>
+                  </form>
+                </div>
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel>Transaction Based</ng-template>
+                <!--Content-->
+
+                <label for="">Rule Builder</label>
+                <form [formGroup]="transactionBasedRuleForm">
+                  <div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px">
+                    <div class="rules-background">
+                      <div class="row">
+                        <div class="col-md-2">
+                          <select class="custom-select custom-select-sm" formControlName="eventType">
+                            <option value="">select</option>
+                            <option value="eventname">Event Name</option>
+                            <option value="productviewed">Product Viewd</option>
+                          </select>
+                        </div>
+                        <div class="col-md-1">
+                          <label for="">In Last</label>
+                        </div>
+                        <div class="col-md-3">
+                          <input class="form-control form-control-sm" type="number" placeholder="Enter here"
+                            formControlName="noOfLastTransactions">
+                        </div>
+                        <div class="col-md-1">
+                          <label for="">Day(s)</label>
+                        </div>
+                      </div>
+                      <br>
+                      <div style="border: 1px solid grey;padding: 5px;border-radius: 5px;">
+                        <div class="row">
+                          <div class="col-md-9">
+                            <div formArrayName="products">
+                              <ng-container
+                                *ngFor="let transactionRule of transactionBasedRuleForm.get('products')?.controls; let i = index">
+                                <div class="row" [formGroupName]="i">
+                                  <div class="col-md-4">
+                                    <select class="custom-select custom-select-sm" formControlName="product">
+                                      <option value="">select</option>
+                                      <option value="itemname">Item Name</option>
+                                      <option value="quantityname">Quantity Name</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <select class="custom-select custom-select-sm" formControlName="condition">
+                                      <option value="">select</option>
+                                      <option value="in">In</option>
+                                      <option value="notin">Not in</option>
+                                      <option value="greaterthan">Greater than
+                                      <option value="lessthan">Less than</option>
+                                      <option value="equal">Equal</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <input class="form-control form-control-sm" type="number" placeholder="Enter here"
+                                      formControlName="productQuantity">
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                              formControlName="logicalCond" (change)="onChangeLogicalCondInTransaction()">
+                              <mat-radio-button value="and">
+                                And
+                              </mat-radio-button>
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              <mat-radio-button value="or">
+                                Or
+                              </mat-radio-button>
+                            </mat-radio-group>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                      <div class="col-md-5">
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                          formControlName="couponPriority">
+                          <mat-radio-button value="once">
+                            Once
+                          </mat-radio-button>
+                          &nbsp;&nbsp;&nbsp;
+                          <mat-radio-button value="recurrence">
+                            Recurrence
+                          </mat-radio-button>
+                          &nbsp;&nbsp;&nbsp;
+                          <mat-radio-button value="count">
+                            Count
+                          </mat-radio-button>
+                          &nbsp;&nbsp;&nbsp;
+                          <mat-radio-button value="between">
+                            Between
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+
+                      <div class="col-md-3">
+                        <input class="form-control form-control-sm" type="number" placeholder="enter here"
+                          formControlName="couponCount">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <button class="btn form-submit-btn add-rule-btn" type="button"
+                      [disabled]="!transactionBasedRuleForm.valid" (click)="onAddNewTransactionBasedRule()">Add
+                      Rule</button>
+                  </div>
+                </div>
+                <div class="row"
+                  *ngIf="ruleBook?.offer?.length > 0 || ruleBook?.discount?.length > 0 || ruleBook?.calendarBased?.length > 0 || ruleBook?.transactionBased?.length > 0 || ruleBook?.productRestrictions?.length > 0">
+                  <div class="col-md-12">
+                    <div class="rule-book-container">
+                      <h6>Rules</h6>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="transaction-rule-container" *ngIf="ruleBook?.transactionBased?.length > 0">
+                            <label>Transaction Based Rules</label>
+                            <div class="row" *ngFor="let transactionBasedRule of ruleBook?.transactionBased">
+                              <div class="col-md-12">
+                                {{ transactionBasedRule?.eventType }} in last
+                                {{ transactionBasedRule?.noOfLastTransactions }} Day(s)
+                                {{ transactionBasedRule?.products[0].product }}
+                                {{ transactionBasedRule?.products[0].condition }}
+                                {{ transactionBasedRule?.products[0].productQuantity }}
+                                {{ transactionBasedRule?.logicalCond }} {{ transactionBasedRule?.products[1].product }}
+                                {{ transactionBasedRule?.products[1].condition }}
+                                {{ transactionBasedRule?.products[1].productQuantity }}
+                                {{ transactionBasedRule?.couponPriority }} {{ transactionBasedRule?.couponCount }}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="offer-rule-container" *ngIf="ruleBook?.offer?.length > 0">
+                            <label>Offer Rules</label>
+                            <div class="row" *ngFor="let offerRule of ruleBook?.offer">
+                              <div class="col-md-12">
+                                <b>IF</b> BUY {{ offerRule?.if?.buy }} OF
+                                {{ offerRule?.if?.of?.code }}{{ offerRule?.if?.of?.manualcode }}{{ offerRule?.if?.of?.file }}
+                                <b>THEN</b> GET {{ offerRule?.then?.get }} OF
+                                {{ offerRule?.then?.of?.code }}{{ offerRule?.then?.of?.manualcode }}{{ offerRule?.then?.of?.file }}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="discount-rule-container" *ngIf="ruleBook?.discount?.length > 0">
+                            <label>Discount Rules</label>
+                            <div class="row" *ngFor="let discountRule of ruleBook?.discount">
+                              <div class="col-md-12">
+                                <b>IF</b> SPENDS BETWEEN AED {{ discountRule?.if?.minSpend }} AND AED
+                                {{ discountRule?.if?.maxSpend }} IN
+                                {{ discountRule?.if?.noOfTransactions }} transactions <b>THEN</b> GET
+                                {{ (discountRule?.then?.discount !== '') ? discountRule?.then?.discount + '% discount' : 'AED ' + discountRule?.then?.amount + ' OFF' }}
+                                AND Max Discount {{ discountRule?.and?.maxDiscount }}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="calendar-based-rule-container" *ngIf="ruleBook?.calendarBased?.length > 0">
+                            <label>Calendar Based Rules</label>
+                            <div class="row" *ngFor="let calendarBasedRule of ruleBook?.calendarBased">
+                              <div class="col-md-12">
+                                <b>IF</b> TIME BETWEEN {{ calendarBasedRule?.if?.startTime }} AND
+                                {{ calendarBasedRule?.if?.endTime }} OF {{ calendarBasedRule?.if?.date }} OF Sun,
+                                Mon days <b>AND</b> SKU purchased
+                                {{ calendarBasedRule?.and?.code }}{{ calendarBasedRule?.and?.manualcode }}{{ calendarBasedRule?.and?.file }}
+                                <b>THEN</b> GET
+                                {{ (calendarBasedRule?.then?.discount !== '') ? calendarBasedRule?.then?.discount + '% discount' : 'AED ' + calendarBasedRule?.then?.amount + ' OFF' }}
+                                AND {{ calendarBasedRule?.then?.maxDiscount }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <button class="btn form-submit-btn review-btn" type="button"
+                            (click)="openRuleReviewModal(template)">Review</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel>Product Restrictions</ng-template>
+                <!--Content-->
+
+                <label for="">Rule Builder</label>
+                <div style="border: 1px solid #ccc; padding: 10px;border-radius: 5px">
+                  <div class="rules-background">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="">Excluding SKU's</label>&nbsp;
+                        <input type="file">
+                      </div>
+                      <div class="col-md-6">
+                        <button class="btn btn-rounded btn-sm" type="button"
+                          style="color:#fff;background-color: #59595C;"><i class="fa fa-arrow-down"
+                            aria-hidden="true"></i>&nbsp;&nbsp;Excel Template</button>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="">Including SKU's</label>&nbsp;
+                        <input type="file">
+                      </div>
+                      <div class="col-md-6">
+                        <button class="btn btn-rounded btn-sm" type="button"
+                          style="color:#fff;background-color: #59595C;"><i class="fa fa-arrow-down"
+                            aria-hidden="true"></i>&nbsp;&nbsp;Excel Template</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <button class="btn form-submit-btn add-rule-btn" type="button">Add
+                      Rule</button>
+                  </div>
+                </div>
+                <label for="">Rules</label>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div style="border: 1px solid #ccc; min-height: 100px; max-height: 100%;border-radius: 10px;">
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <button class="btn form-submit-btn review-btn" type="button"
+                      (click)="openRuleReviewModal(template)">Review</button>
+                  </div>
+                </div>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button (click)="couponStepper?.reset()">Reset</button>
+                </div>
+              </mat-step>
+            </mat-horizontal-stepper>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h6 class="modal-title pull-left">Details Review</h6>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="rule-book-container">
+      <h6>Rules</h6>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="offer-rule-container" *ngIf="ruleBook?.offer?.length > 0">
+            <label>Offer Rules</label>
+            <div class="row" *ngFor="let offerRule of ruleBook?.offer">
+              <div class="col-md-12">
+                <b>IF</b> BUY {{ offerRule?.if?.buy }} OF
+                {{ offerRule?.if?.of?.code }}{{ offerRule?.if?.of?.manualcode }}{{ offerRule?.if?.of?.file }}
+                <b>THEN</b> GET {{ offerRule?.then?.get }} OF
+                {{ offerRule?.then?.of?.code }}{{ offerRule?.then?.of?.manualcode }}{{ offerRule?.then?.of?.file }}
+              </div>
+            </div>
+          </div>
+          <div class="discount-rule-container" *ngIf="ruleBook?.discount?.length > 0">
+            <label>Discount Rules</label>
+            <div class="row" *ngFor="let discountRule of ruleBook?.discount">
+              <div class="col-md-12">
+                <b>IF</b> SPENDS BETWEEN AED {{ discountRule?.if?.minSpend }} AND AED
+                {{ discountRule?.if?.maxSpend }} IN
+                {{ discountRule?.if?.noOfTransactions }} transactions <b>THEN</b> GET
+                {{ (discountRule?.then?.discount !== '') ? discountRule?.then?.discount + '% discount' : 'AED ' + discountRule?.then?.amount + ' OFF' }}
+                AND Max Discount {{ discountRule?.and?.maxDiscount }}
+              </div>
+            </div>
+          </div>
+          <div class="calendar-based-rule-container" *ngIf="ruleBook?.calendarBased?.length > 0">
+            <label>Calendar Based Rules</label>
+            <div class="row" *ngFor="let calendarBasedRule of ruleBook?.calendarBased">
+              <div class="col-md-12">
+                <b>IF</b> TIME BETWEEN {{ calendarBasedRule?.if?.startTime }} AND
+                {{ calendarBasedRule?.if?.endTime }} OF {{ calendarBasedRule?.if?.date }} OF Sun,
+                Mon days <b>AND</b> SKU purchased
+                {{ calendarBasedRule?.and?.code }}{{ calendarBasedRule?.and?.manualcode }}{{ calendarBasedRule?.and?.file }}
+                <b>THEN</b> GET
+                {{ (calendarBasedRule?.then?.discount !== '') ? calendarBasedRule?.then?.discount + '% discount' : 'AED ' + calendarBasedRule?.then?.amount + ' OFF' }}
+                AND {{ calendarBasedRule?.then?.maxDiscount }}
+              </div>
+            </div>
+          </div>
+          <div class="transaction-rule-container" *ngIf="ruleBook?.transactionBased?.length > 0">
+            <label>Transaction Based Rules</label>
+            <div class="row" *ngFor="let transactionBasedRule of ruleBook?.transactionBased">
+              <div class="col-md-12">
+                {{ transactionBasedRule?.eventType }} in last {{ transactionBasedRule?.noOfLastTransactions }} Day(s)
+                {{ transactionBasedRule?.products[0].product }} {{ transactionBasedRule?.products[0].condition }}
+                {{ transactionBasedRule?.products[0].productQuantity }} {{ transactionBasedRule?.logicalCond }}
+                {{ transactionBasedRule?.products[1].product }} {{ transactionBasedRule?.products[1].condition }}
+                {{ transactionBasedRule?.products[1].productQuantity }} {{ transactionBasedRule?.couponPriority }}
+                {{ transactionBasedRule?.couponCount }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

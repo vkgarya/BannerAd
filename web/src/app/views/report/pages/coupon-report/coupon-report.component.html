@@ -1,0 +1,46 @@
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <app-page-title [pageTitleInfo]="pageTitleInfo"></app-page-title>
+                </div>
+                <div class="col-md-4">
+                    <app-data-table-search></app-data-table-search>
+                </div>
+                <div class="col-md-5 text-right">
+                    <app-data-table-column-filter></app-data-table-column-filter>
+                    <!-- <button class="btn btn-outline-dark" style="font-size: .8rem;" routerLink="/campaign/add-discount">Add
+                        Discount<img src="assets/images/ad_discount.png" alt=""> </button> -->
+                </div>
+            </div>
+        </div>
+        <div class="page-body">
+            <ngx-datatable #table class="material" [columns]="columns" columnMode="force" [headerHeight]="50"
+                [footerHeight]="50" rowHeight="auto" [limit]="10" [rows]="rows">
+                <ngx-datatable-column *ngFor="let col of columns" [prop]="col.prop" [name]="col.name" [sortable]="true"
+                    [canAutoResize]="true" [resizeable]="true" [flexGrow]="col?.flexSize">
+                    <ng-template ngx-datatable-header-template let-sort="sortFn">
+                        <span>{{ col.name }}</span>
+                    </ng-template>
+                    <!-- <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span *ngIf="col.prop !== 'image'">{{ row[col.prop] }}</span>
+                        <img [src]="row[col.prop]" alt="Image" *ngIf="col.prop === 'image'" />
+                    </ng-template> -->
+                </ngx-datatable-column>
+                <!-- <ngx-datatable-column name="Activity" [flexGrow]="1">
+                    <ng-template ngx-datatable-header-template>
+                        <span>Activity</span>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span class="pr-2"><img src="assets/images/zoom.png" alt="view" /> View</span>
+                        <span class="pr-2"><img src="assets/images/edit.png" alt="view" /> Edit</span>
+                        <span class="pr-2"><img src="assets/images/delete.png" alt="view" /> Delete</span>
+                    </ng-template>
+                </ngx-datatable-column> -->
+            </ngx-datatable>
+
+        </div>
+    </div>
+</div>

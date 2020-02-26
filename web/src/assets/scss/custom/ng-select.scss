@@ -1,0 +1,19 @@
+.ng-select {
+    &.ng-valid {
+        margin-bottom: 1.5em !important;
+    }
+
+    &.ng-invalid {
+        margin-bottom: 0;
+
+        &.ng-untouched {
+            margin-bottom: 1.5em !important;
+        }
+    }
+
+    .ng-select-container .ng-value-container .ng-input>input {
+        &:focus {
+            border: none !important;
+        }
+    }
+}

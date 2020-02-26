@@ -1,0 +1,51 @@
+
+/* mystyles */
+
+label {
+    font-size: .875rem;
+    color: #495057 !important;
+    font-weight: bold;;
+  }
+  
+  .form-control {
+    color: #000 !important;
+  }
+  
+  .form-control:focus {
+    outline: #4D4FFF !important;
+    border-color: #4D4FFF !important;
+    box-shadow: 0 0 10px black;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .ad-btn {
+    position: absolute;
+    top: 0px;
+    left: 111px;
+    text-transform: capitalize;
+    font-size: 14px;
+    border: 1px solid #B3B3B3;
+    border-radius: 5px;
+    padding: 4px;
+    color: #000;
+    z-index: 5;
+    font-weight: 500;
+  }
+  
+  .ad-btn:hover {
+    color: #BE1535;
+  }
+  
+ 
+  
+  .submit {
+    color: #fff;
+    background-color: #59595C;
+    border-radius: 5px;
+    text-transform: capitalize;
+    font-size: 15px;
+  }
+/*Akbar styles */  

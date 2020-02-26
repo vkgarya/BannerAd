@@ -1,0 +1,218 @@
+.form-group.hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+  height: 0;
+
+  .hidden-input {
+    height: 0;
+    padding: 0;
+  }
+}
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+
+
+
+
+/* akbar tabs */
+.add-btn{
+  background-color: #BE1535 !important;
+  border-color: #BE1535 !important;
+}
+.mat-step-icon-selected{
+  background-color: #BE1535 !important;
+}
+   /* Style the tab */
+   .tab {
+    overflow: hidden;
+    border-bottom: 1px solid #000;
+    /* background-color: #f1f1f1; */
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    cursor: pointer;
+    padding: 6px 16px;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #bf9e66;
+    color: #fff;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #be1535;
+    color: #fff;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #fff;
+    border-top: none;
+}
+
+
+/* akbar tabs */
+
+/* mystyles */
+
+label {
+    font-size: .875rem;
+    color: #495057 !important;
+    font-weight: bold;;
+  }
+  
+  .form-control {
+    color: #000 !important;
+  }
+  
+  .form-control:focus {
+    outline: #4D4FFF !important;
+    border-color: #4D4FFF !important;
+    box-shadow: 0 0 10px black;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .ad-btn {
+    position: absolute;
+    top: 0px;
+    left: 111px;
+    text-transform: capitalize;
+    font-size: 14px;
+    border: 1px solid #B3B3B3;
+    border-radius: 5px;
+    padding: 4px;
+    color: #000;
+    z-index: 5;
+    font-weight: 500;
+  }
+  
+  .ad-btn:hover {
+    color: #BE1535;
+  }
+  
+ 
+  
+  .submit {
+    color: #fff;
+    background-color: #59595C;
+    border-radius: 5px;
+    text-transform: capitalize;
+    font-size: 15px;
+  }
+/*Akbar styles */  
+
+
+.form-group-card, .rules-step-form-container {
+  border: 0;
+  border-radius: .125rem;
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+  padding: 20px;
+}
+
+.form-group-title-container {
+  margin-bottom: 10px;
+
+  .form-group-title {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .add-more-btn {
+    background-color: #060E9F !important;
+    border-color: #060E9F !important;
+    font-size: 13px;
+  }
+}
+
+.form-group-label {
+  color: #484848 !important;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #BE1535 !important;
+}
+
+// .mat-radio-outer-circle{
+//   border-color: #BE1535 !important;
+// }
+// .mat-radio-inner-circle{
+//   background-color: #BE1535 !important;
+// }
+
+//  .mat-radio-inner-circle{
+//   background-color: #BE1535 !important;
+// }
+
+
+
+.add-rule-btn, .review-btn {
+  color:#fff;
+  background-color: #59595C;
+  border-color: #59595C !important;
+  border-radius: 0.2rem !important;
+  text-transform: capitalize;
+  font-size:14px;
+  padding: 4px 17px;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  width: 110px;
+}
+
+.add-more-discount{
+  background-color: #BE1535 !important;
+  border-color: #BE1535 !important;
+  border-radius: 0.2rem !important;
+}
+
+.label-rule-form {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0 1rem;
+}
+.rules-background{
+  padding: 10px;
+  background-color: #e4e4e4;
+}

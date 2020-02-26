@@ -1,0 +1,181 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-title">
+                        <h4><img class="title-image" src="assets/images/partners.png" alt="Page Title Image" />
+                            <p class="title-txt">Partners/Add Partner</p>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="page-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form [formGroup]="addPartnerForm" (ngSubmit)="onAddPartner()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Default input -->
+                                <label for="" class="form-group-label">Partner Name<span
+                                        class="required">*</span></label>
+                                <input class="form-control form-control-sm" type="text" placeholder="Enter partner name"
+                                    formControlName="partner">
+                                <div class="form-input-error"
+                                    *ngIf="(addPartnerForm.get('partner')?.touched || addPartnerForm.get('partner')?.dirty)">
+                                    <div *ngIf="addPartnerForm.get('partner')?.errors?.required">
+                                        Please enter partner name
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="form-group-label">Merchant Id<span
+                                        class="required">*</span></label>
+                                <input class="form-control form-control-sm" type="text" placeholder="Enter merchant id"
+                                    formControlName="merchant">
+                                <div class="form-input-error"
+                                    *ngIf="(addPartnerForm.get('merchant')?.touched || addPartnerForm.get('merchant')?.dirty)">
+                                    <div *ngIf="addPartnerForm.get('merchant')?.errors?.required">
+                                        Please enter merchant id
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Default input -->
+                                <label for="" class="form-group-label">Company Name<span
+                                        class="required">*</span></label>
+                                <input class="form-control form-control-sm" type="text" placeholder="Enter company name"
+                                    formControlName="companyName">
+                                <div class="form-input-error"
+                                    *ngIf="(addPartnerForm.get('companyName')?.touched || addPartnerForm.get('companyName')?.dirty)">
+                                    <div *ngIf="addPartnerForm.get('companyName')?.errors?.required">
+                                        Please enter comapny name
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="form-group-label">Status</label>
+                                <select class="custom-select custom-select-sm" formControlName="status">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <!-- <option value="suspend">Suspend</option>
+                                    <option value="delete">Delete</option> -->
+                                </select>
+                                <div class="form-input-error"
+                                    *ngIf="(addPartnerForm.get('status')?.touched || addPartnerForm.get('status')?.dirty)">
+                                    <div *ngIf="addPartnerForm.get('status')?.errors?.required">
+                                        Please select status
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Default input -->
+                                <label for="" class="form-group-label">Email Address<span
+                                        class="required">*</span></label>
+                                <input class="form-control form-control-sm" type="email" placeholder="Enter email"
+                                    formControlName="email">
+                                <div class="form-input-error"
+                                    *ngIf="(addPartnerForm.get('email')?.touched || addPartnerForm.get('email')?.dirty)">
+                                    <div *ngIf="addPartnerForm.get('email')?.errors?.required">
+                                        Please enter email
+                                    </div>
+                                    <div *ngIf="addPartnerForm.get('email')?.errors?.invalidEmail">
+                                        Please enter valid email 'example@gmail.com'
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+
+                                <label for="" class="form-group-label">Phone Number<span
+                                        class="required">*</span></label>
+                                <input class="form-control form-control-sm" type="text" placeholder="Enter phone number"
+                                    formControlName="phoneNumber" maxlength="15">
+                                <div class="form-input-error"
+                                    *ngIf="(addPartnerForm.get('phoneNumber')?.touched || addPartnerForm.get('phoneNumber')?.dirty)">
+                                    <div *ngIf="addPartnerForm.get('phoneNumber')?.errors?.required">
+                                        Please enter phone number
+                                    </div>
+                                    <div *ngIf="addPartnerForm.get('phoneNumber')?.errors?.invalidPhoneNo">
+                                        Please enter valid phone number
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Default input -->
+                                <label for="" class="form-group-label">Website<span class="required">*</span></label>
+                                <input class="form-control form-control-sm" type="url" placeholder="Enter website"
+                                    formControlName="websiteUrl">
+
+                                <div class="form-input-error"
+                                    *ngIf="(addPartnerForm.get('websiteUrl')?.touched || addPartnerForm.get('websiteUrl')?.dirty)">
+                                    <div *ngIf="addPartnerForm.get('websiteUrl')?.errors?.required">
+                                        Please enter website url
+                                    </div>
+                                    <div *ngIf="addPartnerForm.get('websiteUrl')?.errors?.invalidUrl">
+                                        Please enter valid website url ex: http://www.google.com
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="form-group-label">Nature of Bussiness<span
+                                        class="required">*</span></label>
+                                <input class="form-control form-control-sm" type="text"
+                                    placeholder="Enter bussiness name" formControlName="natureOfBussiness">
+                                <div class="form-input-error"
+                                    *ngIf="(addPartnerForm.get('natureOfBussiness')?.touched || addPartnerForm.get('natureOfBussiness')?.dirty)">
+                                    <div *ngIf="addPartnerForm.get('natureOfBussiness')?.errors?.required">
+                                        Please enter nature of bussiness
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Default input -->
+                                <label for="" class="form-group-label">Address<span class="required">*</span></label>
+                                <input class="form-control form-control-sm" type="text" placeholder="Enter Address"
+                                    formControlName="address">
+                                <div class="form-input-error"
+                                    *ngIf="(addPartnerForm.get('address')?.touched || addPartnerForm.get('address')?.dirty)">
+                                    <div *ngIf="addPartnerForm.get('address')?.errors?.required">
+                                        Please enter address
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button class="btn form-submit-btn" type="submit"
+                                    [disabled]="disableAddPartnerButton">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-primary pull-right" (click)="checkApi()">Check</button>
+    </div>
+</div> -->

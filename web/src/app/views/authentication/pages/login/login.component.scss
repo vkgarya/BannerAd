@@ -1,0 +1,102 @@
+.login-container {
+  position: relative;
+  min-height: 100%;
+  min-width: 100%;
+  background-image: url('../../../../../assets/images/login_cover.png');
+  background-size: cover;
+}
+
+.login-box {
+  position: absolute;
+  padding: 40px 50px;
+  background-color: #fff;
+  width: 400px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1rem;
+  border: 1px solid #aaa;
+
+  .login-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .welcome-txt {
+      font-size: 15px;
+      font-weight: 300;
+    }
+
+    .cms-logo {
+      width: auto;
+      height: 60px;
+      margin-bottom: 12px;
+    }
+
+    .cms-title {
+      color: #060E9F;
+      font-size: 17px;
+      font-weight: 600;
+    }
+  }
+
+  .login-body {
+    margin-top: 20px;
+
+    label {
+      color: #060E9F;
+      
+    }
+
+    input {
+      box-shadow: none;
+      outline: none;
+      font-size: 14px;
+
+      &:focus {
+        border: 1px solid #4D4FFF;
+      }
+    }
+
+    .password-container {
+      position: relative;
+
+      input {
+        padding-right: 40px;
+      }
+
+      .visibility-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: default;
+      }
+    }
+
+    .footer-container {
+      margin-top: 10px;
+
+      .forgot-pwd-txt {
+        margin-bottom: 0;
+        font-weight: 300;
+        font-size: 11px;
+      }
+
+      .login-btn {
+        background-color: #060E9F;
+        color: #fff;
+        float: right;
+        font-size: 13px;
+        padding: 5px 20px;
+      }
+    }
+  }
+}
+
+.login-btn{
+  background-color: #060E9F !important;
+  color: #fff !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}

@@ -1,0 +1,46 @@
+[
+    {
+        "menu": "Partners",
+        "icon": "fa-users",
+        "path": "/partners/partners-list",
+        "basepath": "partners",
+        "image": "assets/images/partner_white.png",
+        "hover_image": "assets/images/partner_hover.png",
+        "hasSub": false
+    },
+    {
+        "menu": "Campaign",
+        "icon": "fa-mail-bulk",
+        "basepath": "campaign",
+        "image": "assets/images/campaign_white.png",
+        "hover_image": "assets/images/campaign_hover.png",
+        "hasSub": true,
+        "submenu": [
+            {
+                "menu": "Banner",
+                "path": "/campaign/banner-list",
+                "icon": ""
+            }, {
+                "menu": "Coupons",
+                "path": "/campaign/coupon-list",
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "menu": "Admin",
+        "icon": "configure_white.png",
+        "image": "assets/images/configure_white.png",
+        "hover_image": "assets/images/configure_hover.png",
+        "basepath": "admin",
+        "hasSub": true,
+        "submenu": [
+            {
+                "menu": "Custom Events",
+                "path": "/admin/custom-event-list",
+                "icon": ""
+            }
+      
+        ]
+    }
+]

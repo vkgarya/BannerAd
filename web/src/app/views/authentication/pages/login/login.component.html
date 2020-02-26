@@ -1,0 +1,65 @@
+<div class="login-container">
+  <div class="login-box">
+    <div class="login-header">
+      <p class="welcome-txt">Welcome To</p>
+      <img class="cms-logo" src="assets/images/empay_logo.jpeg" alt="CMS Logo">
+      <h5 class="cms-title">Campaign Management System</h5>
+    </div>
+    <div class="login-body">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="row">
+          <div class="col-md-12">
+            <p class="login-error text-danger" *ngIf="invalidCredentials">Invalid credentials</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>User Name *</label>
+              <input class="form-control" name="username" formControlName="userName" />
+              <div class="text-danger form-input-error"
+                *ngIf="(loginForm.get('userName')?.touched || loginForm.get('userName')?.dirty)">
+                <ng-container *ngIf="loginForm.get('userName')?.errors?.required">
+                  Please enter user name
+                </ng-container>
+                <ng-container *ngIf="loginForm.get('userName')?.errors?.invalidEmail">
+                  Please enter valid email id
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Password *</label>
+              <div class="password-container">
+                <input class="form-control" [type]="hidePassword ? 'password' : 'text'" name="password"
+                  formControlName="password" />
+                <mat-icon class="visibility-icon" (click)="hidePassword = !hidePassword">
+                  {{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+              </div>
+              <div class="text-danger form-input-error"
+                *ngIf="(loginForm.get('password')?.touched || loginForm.get('password')?.dirty)">
+                <ng-container *ngIf="loginForm.get('password')?.errors?.required">
+                  Please enter password
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-container">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <a routerLink="/forgot-password">Forgot password?</a>
+            </div>
+            <div class="col-md-6">
+              <button type="submit" class="btn login-btn">Login</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

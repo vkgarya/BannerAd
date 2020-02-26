@@ -1,0 +1,10 @@
+<app-header class="app-header"></app-header>
+<div class="wrapper" [ngClass]="sideNavCanvasType">
+    <app-side-nav class="app-side-nav" (onToggleSideNavCanvas)="onToggleSideNavCanvas($event)"></app-side-nav>
+    <div class="page-wrapper">
+        <div class="page-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+<app-footer class="app-footer"></app-footer>

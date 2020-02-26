@@ -1,0 +1,107 @@
+<!-- <p>custom-event-list works!</p>
+<a href="javascript:void(0)" routerLink="/admin/add-custom-event">Add Event</a> -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div [ngClass]="action === 'list' ? 'col-md-3' : 'col-md-9'">
+          <app-page-title [pageTitleInfo]="pageTitleInfo"></app-page-title>
+        </div>
+        <div class="col-md-4" *ngIf="action === 'list'">
+          <app-data-table-search></app-data-table-search>
+        </div>
+        <div class="col-md-5 text-right" *ngIf="action === 'list'">
+          <app-data-table-column-filter></app-data-table-column-filter>
+          <button class="btn btn-outline-dark" style="font-size: .8rem;" routerLink="/admin/add-custom-event">Add
+            Event<img src="assets/images/ad_events.png" alt=""> </button>
+        </div>
+        <div class="col-md-3 text-right" *ngIf="action === 'edit'">
+          <button class="btn btn-outline-dark" style="font-size: .8rem;" (click)="backToList()">Custom-Events
+            List
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="event-list-container" *ngIf="action === 'list'">
+        <ngx-datatable #table class="material" [rows]="customEventsList" [columns]="columns" columnMode="force"
+          [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10" [rows]="rows">
+          <ngx-datatable-column *ngFor="let col of columns" [prop]="col.prop" [name]="col.name" [sortable]="true"
+            [canAutoResize]="true" [resizeable]="true" [flexGrow]="col?.flexSize">
+            <ng-template ngx-datatable-header-template let-sort="sortFn">
+              <span>{{ col.name }}</span>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span>{{ row[col.prop] }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Activity" [flexGrow]="3">
+            <ng-template ngx-datatable-header-template>
+              <span>Activity</span>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span class="pr-2 pointer" (click)="openCustomEventDetailModal(customEventDetailModal, row)"><img
+                  src="assets/images/zoom.png" alt="view" /> View</span>
+              <span class="pr-2 pointer" (click)="onEditEvent(row)"><img src="assets/images/edit.png" alt="view" />
+                Edit</span>
+              <span class="pr-2 pointer" (click)="onDeleteEvent(row)"><img src="assets/images/delete.png" alt="view" />
+                Delete</span>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+      <div class="edit-event-container" *ngIf="action === 'edit'">
+        <app-edit-custom-event [eventId]="selectedEvent.id" (backToList)="backToList()"></app-edit-custom-event>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<ng-template #customEventDetailModal>
+  <div class="modal-header modal-background">
+    <h6 class="modal-title pull-left">Event Details</h6>
+    <button type="button" class="close pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <tr>
+        <th>Event Code</th>
+        <td>{{ selectedEvent?.event_code }}</td>
+      </tr>
+      <tr>
+        <th>Event name</th>
+        <td>{{ selectedEvent?.event_name }}</td>
+      </tr>
+      <tr>
+        <th>Event Description</th>
+        <td>{{ selectedEvent?.event_description }}</td>
+      </tr>
+      <tr>
+        <th>Field Name</th>
+        <td>{{ selectedEvent?.field_name }}</td>
+      </tr>
+      <tr>
+        <th>Field Description</th>
+        <td>{{ selectedEvent?.field_description }}</td>
+      </tr>
+      <tr>
+        <th>Type</th>
+        <td>{{ selectedEvent?.type }}</td>
+      </tr>
+
+      <tr>
+        <th>Mandatory</th>
+        <td>{{ selectedEvent?.mandatory }}</td>
+      </tr>
+
+    </table>
+
+  </div>
+</ng-template>

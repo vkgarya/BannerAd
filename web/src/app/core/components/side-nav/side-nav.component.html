@@ -1,0 +1,38 @@
+<div class="side-nav-container" id="sideNavContainer">
+  <ul class="side-nav-menu">
+    <ng-container *ngFor="let menuItem of menu">
+      <li class="side-nav-item no-dropdown" [ngClass]="{ 'active right-border': menuItem.basepath === basePath }" *ngIf="!menuItem.submenu">
+        <a class="nav-item-main-header nav-item-link" [ngClass]="{ 'active': menuItem.basepath === basePath }" href="javascript:void(0)" [routerLink]="menuItem.path">
+          <!-- <i class="nav-item-link-icon fa" [ngClass]="menuItem.icon"></i> -->
+          <img class="nav-item-link-image on-leave" [src]="menuItem.image" alt="Menu Image" />
+          <!-- <img class="nav-item-link-image on-hover" [src]="menuItem.hover_image" alt="Menu Image" /> -->
+          <img class="nav-item-link-image on-hover" [src]="menuItem.image" alt="Menu Image" />
+          <span class="nav-item-link-text">{{ menuItem.menu }}</span>
+        </a>
+      </li>
+      <li class="side-nav-item side-nav-dropdown" [ngClass]="{ 'active right-border': menuItem.basepath === basePath }" *ngIf="menuItem.submenu">
+        <a class="nav-item-main-header nav-item-link" [ngClass]="{ 'active': menuItem.basepath === basePath }" href="javascript:void(0)">
+          <!-- <i class="nav-item-link-icon fa fa-users"></i> -->
+          <img class="nav-item-link-image on-leave" [src]="menuItem.image" alt="Menu Image" />
+          <!-- <img class="nav-item-link-image on-hover" [src]="menuItem.hover_image" alt="Menu Image" /> -->
+          <img class="nav-item-link-image on-hover" [src]="menuItem.image" alt="Menu Image" />
+          <span class="nav-item-link-text">{{ menuItem.menu }}</span>
+          <i class="fa fa-chevron-right nav-item-link-right"></i>
+        </a>
+        <div class="side-nav-submenu-container" [ngClass]="{ 'active': menuItem.basepath === basePath }">
+          <ul class="side-nav-submenu">
+            <li class="side-nav-item no-dropdown submenu-nav-item" *ngFor="let subMenu of menuItem.submenu">
+              <a href="javascript:void(0)" class="nav-item-link" [ngClass]="{ 'active': subMenu.path === routePath }" [routerLink]="subMenu.path">
+                <i class="nav-item-link-icon fa fa-chevron-right"></i>
+                <span class="nav-item-link-text">{{ subMenu.menu }}</span>
+              </a> 
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+  <a href="javascript:void(0)" class="side-nav-canvas-toggler" (click)="toggleSideNavCanvas()">
+    <i class="fa fa-chevron-left"></i>
+  </a>
+</div>

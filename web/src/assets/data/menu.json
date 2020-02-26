@@ -1,0 +1,104 @@
+[
+    {
+        "menu": "Partners",
+        "icon": "fa-users",
+        "path": "/partners/partners-list",
+        "basepath": "partners",
+        "image": "assets/images/partner_white.png",
+        "hover_image": "assets/images/partner_hover.png",
+        "hasSub": false
+    },
+    {
+        "menu": "Campaign",
+        "icon": "fa-mail-bulk",
+        "basepath": "campaign",
+        "image": "assets/images/campaign_white.png",
+        "hover_image": "assets/images/campaign_hover.png",
+        "hasSub": true,
+        "submenu": [
+            {
+                "menu": "Banner",
+                "path": "/campaign/banner-list",
+                "icon": ""
+            }, {
+                "menu": "Videos",
+                "path": "/campaign/video-list",
+                "icon": ""
+            }, {
+                "menu": "Coupons",
+                "path": "/campaign/coupon-list",
+                "icon": ""
+            }, {
+                "menu": "Referrals",
+                "path": "/campaign/referral-list",
+                "icon": ""
+            }, {
+                "menu": "Discounts",
+                "path": "/campaign/discount-list",
+                "icon": ""
+            }, {
+                "menu": "Loyalty Points",
+                "path": "/campaign/loyalty-point-list",
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "menu": "Report",
+        "icon": "fa-clipboard-list",
+        "basepath": "report",
+        "hasSub": true,
+        "image": "assets/images/report_white.png",
+        "hover_image": "assets/images/report_hover.png",
+        "submenu": [
+            {
+                "menu": "Banner/Video",
+                "path": "/report/banner-video",
+                "icon": ""
+            }, {
+                "menu": "Coupons",
+                "path": "/report/coupon-report",
+                "icon": ""
+            }, {
+                "menu": "Referrals",
+                "path": "/report/referral-report",
+                "icon": ""
+            }, {
+                "menu": "Discounts",
+                "path": "/report/discount-report",
+                "icon": ""
+            }, {
+                "menu": "Loyalty Points",
+                "path": "/report/loyalty-point-report",
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "menu": "Admin",
+        "icon": "configure_white.png",
+        "image": "assets/images/configure_white.png",
+        "hover_image": "assets/images/configure_hover.png",
+        "basepath": "admin",
+        "hasSub": true,
+        "submenu": [
+            {
+                "menu": "Custom Events",
+                "path": "/admin/custom-event-list",
+                "icon": ""
+            }, {
+                "menu": "Manage Users",
+                "path": "/admin/user-list",
+                "icon": ""
+            }, {
+                "menu": "Configure",
+                "path": "/admin/configure-property-list",
+                "icon": ""
+            }, {
+                "menu": "User Events",
+                "path": "/admin/user-event-list",
+                "icon": ""
+            }
+        ]
+    }
+]

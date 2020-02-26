@@ -1,0 +1,132 @@
+<!-- <p>coupon-list works!</p>
+<a href="javascript:void(0)" routerLink="/campaign/add-coupon">Add Coupon</a> -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div [ngClass]="action === 'list' ? 'col-md-3' : 'col-md-9'">
+          <app-page-title [pageTitleInfo]="pageTitleInfo"></app-page-title>
+        </div>
+        <div class="col-md-4" *ngIf="action === 'list'">
+          <app-data-table-search></app-data-table-search>
+        </div>
+        <div class="col-md-5 text-right" *ngIf="action === 'list'">
+          <app-data-table-column-filter></app-data-table-column-filter>
+          <button class="btn btn-outline-dark" style="font-size: .8rem;" routerLink="/campaign/add-coupon">Add
+            Coupon<img src="assets/images/add_coupon.png" alt=""> </button>
+        </div>
+        <div class="col-md-3 text-right" *ngIf="action === 'edit'">
+          <button class="btn btn-outline-dark" style="font-size: .8rem;" (click)="backToList()">
+            Coupon list
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="coupon-list-container" *ngIf="action === 'list'">
+        <ngx-datatable #table class="material" [rows]="couponsList" [columns]="columns" columnMode="flex" [headerHeight]="50"
+          [footerHeight]="50" rowHeight="auto" [limit]="10" [rows]="couponsList">
+          <ngx-datatable-column *ngFor="let col of columns" [prop]="col.prop" [name]="col.name" [sortable]="true"
+            [canAutoResize]="true" [resizeable]="true" [flexGrow]="col?.flexSize">
+            <ng-template ngx-datatable-header-template let-sort="sortFn">
+              <span>{{ col.name }}</span>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div [ngSwitch]="col.prop">
+                <span *ngSwitchCase="'started_on'">{{ row[col.prop] | date }}</span>
+                <span *ngSwitchCase="'closed_on'">{{ row[col.prop] | date }}</span>
+                <span *ngSwitchCase="'codes'">{{ getCouponCodes(row[col.prop]) }}</span>
+                <span *ngSwitchDefault>{{ row[col.prop] }}</span>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Activity" [flexGrow]="3">
+            <ng-template ngx-datatable-header-template>
+              <span>Activity</span>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <!-- <span class="pr-2 pointer" (click)="openCouponDetailModal(couponDetailModal, row)"><img
+                  src="assets/images/zoom.png" alt="view" /> View</span> -->
+                  <a class="pr-2 pointer" routerLink="/campaign/edit-coupon/{{row.id}}">Edit<img src="assets/images/edit.png" alt=""> </a>
+              <span class="pr-2 pointer" (click)="onDeleteCoupon(row)"><img src="assets/images/delete.png" alt="view" /> Delete</span>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+
+      <div class="edit-coupon-container" *ngIf="action === 'edit'">
+        <app-new-edit-coupon [couponId]="selectedCoupon.id" (backToList)="backToList()"></app-new-edit-coupon>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #couponDetailModal>
+  <div class="modal-header modal-background">
+    <h6 class="modal-title pull-left">Coupon Details</h6>
+    <button type="button" class="close pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <tr>
+        <th>Coupon Id</th>
+        <td>{{ selectedCoupon?.id }}</td>
+      </tr>
+      <tr>
+        <th>Coupon Code</th>
+        <td>{{ getCouponCodes(selectedCoupon?.Codes) }}</td>
+      </tr>
+      <tr>
+        <th>From</th>
+        <td>{{ selectedCoupon?.started_on | date }}</td>
+      </tr>
+      <tr>
+        <th>To</th>
+        <td>{{ selectedCoupon?.closed_on | date }}</td>
+      </tr>
+      <tr>
+        <th>Allow other Offers</th>
+        <td>{{ selectedCoupon?.is_mergable }}</td>
+      </tr>
+      <tr>
+        <th>Coupon Type</th>
+        <td>{{ selectedCoupon?.coupon_type }}</td>
+      </tr>
+      <tr>
+        <th>Currency</th>
+        <td>{{ selectedCoupon?.currency }}</td>
+      </tr>
+      <tr>
+        <th>Min cart value</th>
+        <td>{{ selectedCoupon?.min_cart_value }}</td>
+      </tr>
+
+      <tr>
+        <th>Limit per User</th>
+        <td>{{ selectedCoupon?.limit_per_user }}</td>
+      </tr>
+      <tr>
+        <th>Coupon limit</th>
+        <td>{{ selectedCoupon?.coupon_limit }}</td>
+      </tr>
+      <tr>
+        <th>Coupon limit amount</th>
+        <td>{{ selectedCoupon?.coupon_limit_amount }}</td>
+      </tr>
+      <tr>
+        <th>Referral code required</th>
+        <td>{{ selectedCoupon?.referral_code_required }}</td>
+      </tr>
+      <tr>
+        <th>Description</th>
+        <td>{{ getDescriptions(selectedCoupon?.description) }}</td>
+      </tr>
+    </table>
+
+  </div>
+</ng-template>

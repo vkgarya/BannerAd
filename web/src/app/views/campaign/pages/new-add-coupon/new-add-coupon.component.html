@@ -1,0 +1,981 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col-md-3">
+          <app-page-title [pageTitleInfo]="pageTitleInfo"></app-page-title>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12">
+          <form [formGroup]="couponForm" (ngSubmit)="onAddNewCoupon()">
+            <mat-horizontal-stepper linear #couponStepper>
+              <!-- [stepControl]="couponForm?.get('coupon')" -->
+              <mat-step [editable]="isEditable" [stepControl]="couponForm?.get('coupon')">
+                <ng-template matStepLabel>Coupon</ng-template>
+                <div formGroupName="coupon">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                        formControlName="applyManual">
+                        <mat-radio-button value="isManual">
+                          Is Manual
+                        </mat-radio-button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <mat-radio-button value="automatic">
+                          Automatic
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <div class="col-md-6">
+                      <!-- Default input -->
+                      <label for="" class="form-group-label">Status<span style="color:#BE1535;">*</span></label>
+                      <select class="form-control form-control-sm" formControlName="status">
+                        <option value="">Select</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="active">Suspended</option>
+                        <option value="inactive">Deleted</option>
+                        <option value="offline">Offline</option>                      
+                      </select>
+                
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group-title-container">
+                        <div class="row align-items-center">
+                          <div class="col-md-5">
+                            <h6 class="form-group-title">Coupon Description *</h6>
+                          </div>
+                          <div class="col-md-5 text-right">
+                            <button type="button" class="btn btn-primary btn-sm add-format-more"
+                              (click)="onAddCouponDescription()">+ Add
+                              More</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div formArrayName="couponDescriptions">
+                            <ng-container
+                              *ngFor="let couponDescription of couponForm?.get('coupon')?.get('couponDescriptions')?.controls; let i = index">
+                              <div class="row" [formGroupName]="i">
+                                <div class="col-md-5">
+                                  <div class="form-group">
+                                    <select name="language_{{i}}" class="form-control" formControlName="language">
+                                      <option value="">Select</option>
+                                      <option value="en">English</option>
+                                      <option value="ar">Arabic</option>
+                                    </select>
+                                    <div class="form-input-error"
+                                      *ngIf="(couponForm.get('coupon')?.get('couponDescriptions')?.controls[i]?.get('language')?.touched || couponForm.get('coupon')?.get('couponDescriptions')?.controls[i]?.get('language')?.dirty)">
+                                      <div
+                                        *ngIf="couponForm.get('coupon')?.get('couponDescriptions')?.controls[i]?.get('language')?.errors?.required">
+                                        Please select langauge
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="form-group">
+                                    <textarea name="description" rows="5" class="form-control" placeholder="Description"
+                                      formControlName="description"></textarea>
+                                    <div class="form-input-error"
+                                      *ngIf="(couponForm.get('coupon')?.get('couponDescriptions')?.controls[i]?.get('description')?.touched || couponForm.get('coupon')?.get('couponDescriptions')?.controls[i]?.get('description')?.dirty)">
+                                      <div
+                                        *ngIf="couponForm.get('coupon')?.get('couponDescriptions')?.controls[i]?.get('description')?.errors?.required">
+                                        Please enter description
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <i class="fa fa-trash" (click)="onDeleteCouponDescription(i)"
+                                    *ngIf="couponForm.get('coupon')?.get('couponDescriptions')?.controls?.length > 1"></i>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group-title-container">
+                        <div class="row align-items-center">
+                          <div class="col-md-5">
+                            <h6 class="form-group-title">Coupon Codes *</h6>
+                          </div>
+                          <div class="col-md-5 text-right">
+                            <button type="button" class="btn btn-primary btn-sm add-format-more"
+                              (click)="onAddCouponCode()">+ Add
+                              More</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div formArrayName="couponCodes">
+                            <ng-container
+                              *ngFor="let couponCode of couponForm?.get('coupon')?.get('couponCodes')?.controls; let i = index">
+                              <div class="row" [formGroupName]="i">
+                                <div class="col-md-5">
+                                  <div class="form-group">
+                                    <select name="codelanguage_{{i}}" class="form-control" formControlName="language">
+                                      <option value="">Select</option>
+                                      <option value="en">English</option>
+                                      <option value="ar">Arabic</option>
+                                    </select>
+                                    <div class="form-input-error"
+                                      *ngIf="(couponForm.get('coupon')?.get('couponCodes')?.controls[i]?.get('language')?.touched || couponForm.get('coupon')?.get('couponCodes')?.controls[i]?.get('language')?.dirty)">
+                                      <div
+                                        *ngIf="couponForm.get('coupon')?.get('couponCodes')?.controls[i]?.get('language')?.errors?.required">
+                                        Please select language
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="form-group">
+                                    <input type="text" name="couponcode_{{i}}" class="form-control"
+                                      placeholder="Coupon code" formControlName="code" />
+                                    <div class="form-input-error"
+                                      *ngIf="(couponForm.get('coupon')?.get('couponCodes')?.controls[i]?.get('code')?.touched || couponForm.get('coupon')?.get('couponCodes')?.controls[i]?.get('code')?.dirty)">
+                                      <div
+                                        *ngIf="couponForm.get('coupon')?.get('couponCodes')?.controls[i]?.get('code')?.errors?.required">
+                                        Please enter code
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <i class="fa fa-trash" (click)="onDeleteCouponCode(i)"
+                                    *ngIf="couponForm?.get('coupon')?.get('couponCodes')?.controls.length > 1"></i>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-xs-12 col-12 col-md-5 form-group">
+                          <label for="" class="form-group-label">Campaign Start and end date *</label>
+                          <div class="input-group">
+                            <input type="text" class="form-control" #drp="bsDaterangepicker" bsDaterangepicker
+                              [bsConfig]="{ isAnimated: true, rangeInputFormat : 'DD-MM-YYYY', dateInputFormat: 'DD-MM-YYYY', showWeekNumbers: false, adaptivePosition: true }"
+                              formControlName="startEndDate" placeholder="dd-mm-yyyy - dd-mm-yyyy" readonly>
+
+
+
+                            <div class="input-group-append">
+                              <span class="input-group-text" (click)="drp.toggle()" [attr.aria-expanded]="drp.isOpen"><i
+                                  class="fa fa-calendar"></i></span>
+                            </div>
+                          </div>
+                          <div class="form-input-error"
+                            *ngIf="(couponForm?.get('coupon')?.get('startEndDate')?.touched || couponForm?.get('coupon')?.get('startEndDate')?.dirty)">
+                            <div *ngIf="couponForm?.get('coupon')?.get('startEndDate')?.errors?.required">
+                              Please select start and end date
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-12 col-md-5">
+                          <br><br>
+                          <div class="form-group">
+                            <mat-checkbox formControlName="allowOtherOffers">Allow other offers</mat-checkbox>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-5">
+                          <div class="form-group">
+                            <label for="" class="form-group-label">Coupon Type *</label>
+                            <select name="couponType" class="form-control" formControlName="couponType"
+                              (change)="onSelectCouponType()">
+                              <option value="">Select</option>
+                              <option value="flat">Flat</option>
+                              <option value="percentage">Percentage</option>
+                              <option value="offer">Offer</option>
+                            </select>
+                            <div class="form-input-error"
+                              *ngIf="(couponForm?.get('coupon')?.get('couponType')?.touched || couponForm?.get('coupon')?.get('couponType')?.dirty)">
+                              <div *ngIf="couponForm?.get('coupon')?.get('couponType')?.errors?.required">
+                                Please select coupon type
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-5">
+                          <div class="form-group">
+                            <label for="" class="form-group-label">Currency *</label>
+                            <select name="currency" class="form-control" formControlName="currency">
+                              <option value="">Select</option>
+                              <option value="USD">USD</option>
+                              <option value="AED">AED</option>
+                            </select>
+                            <div class="form-input-error"
+                              *ngIf="(couponForm?.get('coupon')?.get('currency')?.touched || couponForm?.get('coupon')?.get('currency')?.dirty)">
+                              <div *ngIf="couponForm?.get('coupon')?.get('currency')?.errors?.required">
+                                Please select currency
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="couponForm?.get('coupon')?.get('couponType')?.value === 'flat'">
+                    <div class="col-md-12">
+                      <div class="row" formGroupName="couponValue">
+                        <div class="col-md-5">
+                          <div class="form-group">
+                            <label for="" class="form-group-label">Amount</label>
+                            <input type="text" name="amount" class="form-control" formControlName="amount" />
+                            <div class="form-input-error"
+                              *ngIf="(couponForm?.get('coupon')?.get('couponValue').get('amount')?.touched || couponForm?.get('coupon')?.get('couponValue').get('amount')?.dirty)">
+                              <div
+                                *ngIf="couponForm?.get('coupon')?.get('couponValue').get('amount')?.errors?.required">
+                                Please enter
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="couponForm?.get('coupon')?.get('couponType')?.value === 'percentage'">
+                    <div class="col-md-12">
+                      <div class="row" formGroupName="couponValue">
+                        <div class="col-md-5">
+                          <div class="form-group">
+                            <label for="" class="form-group-label">Enter Rebate Value</label>
+                            <input type="text" name="minRebateValue" class="form-control"
+                              formControlName="minRebateValue" placeholder="%" />
+                            <div class="form-input-error"
+                              *ngIf="(couponForm?.get('coupon')?.get('couponValue').get('minRebateValue')?.touched || couponForm?.get('coupon')?.get('couponValue').get('minRebateValue')?.dirty)">
+                              <div
+                                *ngIf="couponForm?.get('coupon')?.get('couponValue').get('minRebateValue')?.errors?.required">
+                                Please enter min rebate value
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-5">
+                          <div class="form-group">
+                            <label for="" class="form-group-label">Max Rebate Value</label>
+                            <input type="text" name="maxRebateValue" class="form-control"
+                              formControlName="maxRebateValue" placeholder="Enter value" />
+                            <div class="form-input-error"
+                              *ngIf="(couponForm?.get('coupon')?.get('couponValue').get('maxRebateValue')?.touched || couponForm?.get('coupon')?.get('couponValue').get('maxRebateValue')?.dirty)">
+                              <div
+                                *ngIf="couponForm?.get('coupon')?.get('couponValue').get('maxRebateValue')?.errors?.required">
+                                Please enter max rebate value
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="" class="form-group-label">Min Cart Value</label>
+                        <input type="number" name="minCartValue" class="form-control" formControlName="minCartValue"
+                          placeholder="Min cart value" />
+                        <div class="form-input-error"
+                          *ngIf="(couponForm?.get('coupon')?.get('minCartValue')?.touched || couponForm?.get('coupon')?.get('minCartValue')?.dirty)">
+                          <div *ngIf="couponForm?.get('coupon')?.get('minCartValue')?.errors?.required">
+                            Please enter min cart value
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="" class="form-group-label">Limit Per User</label>
+                        <input type="number" name="limitPerUser" class="form-control" formControlName="limitPerUser"
+                          placeholder="Limit Per User" />
+                        <div class="form-input-error"
+                          *ngIf="(couponForm?.get('coupon')?.get('limitPerUser')?.touched || couponForm?.get('coupon')?.get('limitPerUser')?.dirty)">
+                          <div *ngIf="couponForm?.get('coupon')?.get('limitPerUser')?.errors?.required">
+                            Please enter limit per user
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="" class="form-group-label">Coupon Limit</label>
+                        <input type="number" name="couponLimit" class="form-control" formControlName="couponLimit"
+                          placeholder="Coupon Limit" />
+                        <div class="form-input-error"
+                          *ngIf="(couponForm?.get('coupon')?.get('couponLimit')?.touched || couponForm?.get('coupon')?.get('couponLimit')?.dirty)">
+                          <div *ngIf="couponForm?.get('coupon')?.get('couponLimit')?.errors?.required">
+                            Please enter coupon limit
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="" class="form-group-label">Coupon Limit Amount</label>
+                        <input type="number" name="couponLimitAmount" class="form-control"
+                          formControlName="couponLimitAmount" placeholder="Coupon Limit Amount" />
+                        <div class="form-input-error"
+                          *ngIf="(couponForm?.get('coupon')?.get('couponLimitAmount')?.touched || couponForm?.get('coupon')?.get('couponLimitAmount')?.dirty)">
+                          <div *ngIf="couponForm?.get('coupon')?.get('couponLimitAmount')?.errors?.required">
+                            Please enter coupon limit amount
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-5">
+                      <!-- Default input -->
+                      <label for="" class="form-group-label">Partner</label>
+                      <select class="form-control" formControlName="partner">
+                        <option value="">Select partner</option>
+                        <option *ngFor="let partner of partnersList" [value]="partner.id">{{ partner.name }}</option>
+                      </select>
+                      <div class="form-input-error"
+                        *ngIf="(couponForm?.get('coupon')?.get('partner')?.touched || couponForm?.get('coupon')?.get('partner')?.dirty)">
+                        <div *ngIf="couponForm?.get('coupon')?.get('partner')?.errors?.required">
+                          Please select partner
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      <br><br>
+                      <div class="form-group">
+                        <mat-checkbox formControlName="referralCodeReq">Referral Code Required</mat-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn form-submit-btn" [disabled]="disableAddCouponButton">Submit</button>
+                <button type="button" mat-button matStepperNext
+                  (click)="validateFormGroup(couponForm?.get('coupon'))">Next</button>
+              </mat-step>
+
+              <mat-step [editable]="isEditable" [stepControl]="couponForm?.get('offer')">
+                <ng-template matStepLabel>Offer</ng-template>
+                <div formGroupName="offer">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h6>Rule Builder</h6>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <div class="form-group">
+                                <label class="form-group-label">File</label><br>
+                                <input type="file" name="offerFile" formControlName="offerFileName"
+                                  (change)="onChooseOfferFile($event)" />
+                              </div>
+                            </div>
+                            <div  class="col-md-4">
+                              <a target="_blank" href="https://d3ay9lzldkqm40.cloudfront.net/empay/static/Offers.xlsx
+                              "><button class="btn btn-rounded btn-sm"
+                                  type="button" style="color:#fff;background-color: #59595C;"><i class="fa fa-arrow-down"
+                                    aria-hidden="true"></i>&nbsp;&nbsp;Template</button></a>
+                            </div>
+                            <div *ngIf="files.offers" class="col-md-4">
+                              <a target="_blank" href="{{files.offers}}"><button class="btn btn-rounded btn-sm"
+                                  type="button" style="color:#fff;background-color: #59595C;"><i
+                                    class="fa fa-arrow-down" aria-hidden="true"></i>&nbsp;&nbsp;Download</button></a>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group-title-container">
+                                <h6 class="form-group-title">IF</h6>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div class="form-group-background">
+                                    <div class="row">
+                                      <div class="col-md-4">
+                                        <label class="form-group-label">Buy</label>
+                                        <input class="form-control" type="number" name="buyQuantity"
+                                          formControlName="buyQuantity" placeholder="Qunatity"
+                                          (keyup)="onEnterQuantities()" />
+                                        <div class="form-input-error"
+                                          *ngIf="(couponForm?.get('offer')?.get('buyQuantity')?.touched || couponForm?.get('offer')?.get('buyQuantity')?.dirty)">
+                                          <div *ngIf="couponForm?.get('offer')?.get('buyQuantity')?.errors?.required">
+                                            Please enter quantity
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4" *ngIf="couponForm.get('offer')?.get('buySkus')">
+                                        <label class="form-group-label">Sku Codes</label>
+                                        <textarea class="form-control" name="buySkus" rows="4" formControlName="buySkus"
+                                          placeholder="Enter comma separated sku codes"></textarea>
+                                        <div class="form-input-error"
+                                          *ngIf="(couponForm?.get('offer')?.get('buySkus')?.touched || couponForm?.get('offer')?.get('buySkus')?.dirty)">
+                                          <div *ngIf="couponForm?.get('offer')?.get('buySkus')?.errors?.required">
+                                            Please enter sku codes
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group-title-container">
+                                <h6 class="form-group-title mt-3">THEN</h6>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div class="form-group-background">
+                                    <div class="row">
+                                      <div class="col-md-4">
+                                        <label class="form-group-label">GET</label>
+                                        <input class="form-control" type="number" name="getQuantity"
+                                          formControlName="getQuantity" placeholder="Qunatity"
+                                          (keyup)="onEnterQuantities()" />
+                                        <div class="form-input-error"
+                                          *ngIf="(couponForm?.get('offer')?.get('getQuantity')?.touched || couponForm?.get('offer')?.get('getQuantity')?.dirty)">
+                                          <div *ngIf="couponForm?.get('offer')?.get('getQuantity')?.errors?.required">
+                                            Please enter quantity
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4" *ngIf="couponForm.get('offer')?.get('getSkus')">
+                                        <label class="form-group-label">Sku Codes</label>
+                                        <textarea class="form-control" name="getSkus" rows="4" formControlName="getSkus"
+                                          placeholder="Enter comma separated sku codes"></textarea>
+                                        <div class="form-input-error"
+                                          *ngIf="(couponForm?.get('offer')?.get('getSkus')?.touched || couponForm?.get('offer')?.get('getSkus')?.dirty)">
+                                          <div *ngIf="couponForm?.get('offer')?.get('getSkus')?.errors?.required">
+                                            Please enter sku codes
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-12 mt-3">
+                              <label class="form-group-label">Offer Description</label>
+                              <textarea class="form-control" name="offerDescription" rows="4"
+                                formControlName="offerDescription" placeholder="Enter description"></textarea>
+
+                              <div class="form-input-error"
+                                *ngIf="(couponForm?.get('offer')?.get('offerDescription')?.touched || couponForm?.get('offer')?.get('offerDescription')?.dirty)">
+                                <div *ngIf="couponForm?.get('offer')?.get('offerDescription')?.errors?.required">
+                                  Please enter offer description
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn form-submit-btn" [disabled]="disableAddCouponButton">Submit</button>
+                <button type="button" mat-button matStepperPrevious
+                  [disabled]="!couponForm?.get('offer')?.valid">Back</button>
+                <button type="button" mat-button matStepperNext
+                  (click)="markFormGroupAsTouched(couponForm?.get('offer'))">Next</button>
+              </mat-step>
+
+              <mat-step [editable]="isEditable" [stepControl]="couponForm?.get('categoryBased')">
+                <ng-template matStepLabel>Category Based</ng-template>
+                <div formGroupName="categoryBased">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="" class="form-group-label">Category</label>
+                        <select name="categoryName" class="form-control" formControlName="categoryName"
+                          (change)="onSelectCategoryName()">
+                          <option value="">Select</option>
+                          <option value="food">Food</option>
+                          <option value="apparel">Apparel</option>
+                          <option value="service">Service</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="" class="form-group-label">Quantity</label>
+                        <input type="number" name="quantity" class="form-control" formControlName="quantity"
+                          placeholder="Quantity" />
+                        <div class="form-input-error"
+                          *ngIf="(couponForm?.get('categoryBased')?.get('quantity')?.touched || couponForm?.get('categoryBased')?.get('quantity')?.dirty)">
+                          <div *ngIf="couponForm?.get('categoryBased')?.get('quantity')?.errors?.required">
+                            Please enter quantity
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn form-submit-btn" [disabled]="disableAddCouponButton">Submit</button>
+                <button type="button" mat-button matStepperPrevious
+                  [disabled]="!couponForm?.get('categoryBased')?.valid">Back</button>
+                <button type="button" mat-button matStepperNext
+                  (click)="markFormGroupAsTouched(couponForm?.get('categoryBased'))">Next</button>
+              </mat-step>
+
+              <mat-step [editable]="isEditable" [stepControl]="couponForm?.get('calendarBased')">
+                <ng-template matStepLabel>Coupon Validity</ng-template>
+                <div formGroupName="calendarBased">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label class="form-group-label">Start Time</label>
+                          <input class="form-control" type="time" name="startTime" formControlName="startTime"
+                            (keyup)="onEnterStartTime()" (change)="onEnterStartTime()" />
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-group-label">End Time</label>
+                          <input class="form-control" type="time" name="endTime" formControlName="endTime" />
+                          <div class="form-input-error"
+                            *ngIf="(couponForm?.get('calendarBased')?.get('endTime')?.touched || couponForm?.get('calendarBased')?.get('endTime')?.dirty)">
+                            <div *ngIf="couponForm?.get('calendarBased')?.get('endTime')?.errors?.required">
+                              Please enter end time
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p>And</p>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-md-4 form-group">
+                              <!-- <label for="" class="form-group-label">Start and end date *</label>
+                              <div class="input-group">
+                                <input type="text" class="form-control" #drpInCal="bsDaterangepicker" bsDaterangepicker
+                                  [bsConfig]="{ isAnimated: true, rangeInputFormat : 'DD-MM-YYYY', dateInputFormat: 'DD-MM-YYYY', showWeekNumbers: false }"
+                                  formControlName="startAndEndDate" placeholder="dd-mm-yyyy - dd-mm-yyyy" readonly>
+                                <div class="input-group-append">
+                                  <span class="input-group-text" (click)="drpInCal.toggle()"
+                                    [attr.aria-expanded]="drpInCal.isOpen"><i class="fa fa-calendar"></i></span>
+                                </div>
+                              </div> -->
+                              <label for="" class="form-group-label">Dates</label>
+                              <ng-select [items]="datesList" [multiple]="true" bindLabel="label"
+                                [selectableGroup]="true" [closeOnSelect]="false" bindValue="value"
+                                formControlName="dates">
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                  <input id="cal-date-item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                                  {{ item.label }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p>And</p>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <label for="" class="form-group-label">Month<span class="required">*</span></label>
+                              <ng-select [items]="monthsList" [multiple]="true" bindLabel="label"
+                                [selectableGroup]="true" [closeOnSelect]="false" bindValue="value"
+                                formControlName="month">
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                  <input id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                                  {{ item.label }}
+                                </ng-template>
+                              </ng-select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p>And</p>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div formArrayName="weekDays">
+                                <ng-container
+                                  *ngFor="let weekday of couponForm.get('calendarBased')?.get('weekDays')?.controls; let i=index;">
+                                  <mat-checkbox class="mr-3" [formControl]="weekday" [value]="(i + 1)">{{ weekDays[i] }}
+                                  </mat-checkbox>
+                                </ng-container>
+                                <!-- <mat-checkbox (change)="">All</mat-checkbox> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn form-submit-btn" [disabled]="disableAddCouponButton">Submit</button>
+                <button type="button" mat-button matStepperPrevious
+                  [disabled]="!couponForm?.get('calendarBased')?.valid">Back</button>
+                <button type="button" mat-button matStepperNext
+                  (click)="markFormGroupAsTouched(couponForm?.get('calendarBased'))">Next</button>
+              </mat-step>
+
+              <mat-step [editable]="isEditable" [stepControl]="couponForm?.get('eventBased')">
+                <ng-template matStepLabel>Event Based Rule</ng-template>
+                <div formGroupName="eventBased">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label class="form-group-label">Event</label>
+                          <select name="event" class="form-control" formControlName="event" (change)="onSelectEvent()">
+                            <option value="">Select</option>
+                            <option *ngFor="let customEvent of customEventsList; let i = index" [value]="i">
+                              {{ customEvent?.event_name }}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="fields-container" *ngIf="couponForm?.get('eventBased')?.get('event')?.value !== ''">
+                        <p>Fields</p>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div class="col-md-4 form-group" *ngIf="couponForm?.get('eventBased')?.get('key')">
+                                <label for="" class="form-group-label">Key</label>
+                                <select name="key" class="form-control" formControlName="key"
+                                  (change)="onSelectEventField()">
+                                  <option value="">Select</option>
+                                  <option *ngFor="let customEventField of customEventFields; let i = index" [value]="i">
+                                    {{ customEventField?.field_name }}</option>
+                                </select>
+                                <div class="form-input-error"
+                                  *ngIf="(couponForm?.get('eventBased')?.get('key')?.touched || couponForm?.get('eventBased')?.get('key')?.dirty)">
+                                  <div *ngIf="couponForm?.get('eventBased')?.get('key')?.errors?.required">
+                                    Please select key
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4 form-group" *ngIf="couponForm?.get('eventBased')?.get('condition')">
+                                <label for="" class="form-group-label">Condition</label>
+                                <select name="condition" class="form-control" formControlName="condition">
+                                  <option value="">Select</option>
+                                  <option value="gt">Greater than</option>
+                                  <option value="lt">Less than</option>
+                                  <option value="eq">Equal To</option>
+                                  <option value="like">Like</option>
+                                  <option value="starts with">Starts with</option>
+                                  <option value="ends with">Ends with</option>
+                                </select>
+                                <div class="form-input-error"
+                                  *ngIf="(couponForm?.get('eventBased')?.get('condition')?.touched || couponForm?.get('eventBased')?.get('condition')?.dirty)">
+                                  <div *ngIf="couponForm?.get('eventBased')?.get('condition')?.errors?.required">
+                                    Please select condition
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4 form-group" *ngIf="couponForm?.get('eventBased')?.get('value')">
+                                <label class="form-group-label">Value</label>
+                                <ng-container *ngIf="couponForm?.get('eventBased')?.get('type').value === 'stringType'">
+                                  <input type="text" class="form-control" formControlName="value" />
+                                  <div class="form-input-error"
+                                    *ngIf="(couponForm?.get('eventBased')?.get('value')?.touched || couponForm?.get('eventBased')?.get('value')?.dirty)">
+                                    <div *ngIf="couponForm?.get('eventBased')?.get('value')?.errors?.required">
+                                      Please enter value
+                                    </div>
+                                  </div>
+                                </ng-container>
+                                <ng-container *ngIf="couponForm?.get('eventBased')?.get('type').value === 'intType'">
+                                  <div class="row">
+                                    <div class="col-md-5">
+                                      <select class="form-control" formControlName="indOrSum">
+                                        <option value="individual">Individual</option>
+                                        <option value="sum">Sum</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-md-7">
+                                      <input type="text" class="form-control" formControlName="value" />
+                                      <div class="form-input-error"
+                                        *ngIf="(couponForm?.get('eventBased')?.get('value')?.touched || couponForm?.get('eventBased')?.get('value')?.dirty)">
+                                        <div *ngIf="couponForm?.get('eventBased')?.get('value')?.errors?.required">
+                                          Please enter value
+                                        </div>
+                                        <div *ngIf="couponForm?.get('eventBased')?.get('value')?.errors?.invalidNo">
+                                          Please enter valid integer
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </ng-container>
+                                <ng-container *ngIf="couponForm?.get('eventBased')?.get('type').value === 'floatType'">
+                                  <div class="row">
+                                    <div class="col-md-5">
+                                      <select class="form-control" formControlName="indOrSum">
+                                        <option value="individual">Individual</option>
+                                        <option value="sum">Sum</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-md-7">
+                                      <input type="text" class="form-control" formControlName="value" />
+                                      <div class="form-input-error"
+                                        *ngIf="(couponForm?.get('eventBased')?.get('value')?.touched || couponForm?.get('eventBased')?.get('value')?.dirty)">
+                                        <div *ngIf="couponForm?.get('eventBased')?.get('value')?.errors?.required">
+                                          Please enter value
+                                        </div>
+                                        <div
+                                          *ngIf="couponForm?.get('eventBased')?.get('value')?.errors?.invalidFloatingNo">
+                                          Please enter valid decimal number
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="couponForm?.get('eventBased')?.get('type').value === 'booleanType'">
+                                  <br>
+                                  <mat-checkbox formControlName="value"></mat-checkbox>
+                                </ng-container>
+                                <ng-container *ngIf="couponForm?.get('eventBased')?.get('type').value === 'dateType'">
+                                  <input type="date" class="form-control" formControlName="value" />
+                                  <div class="form-input-error"
+                                    *ngIf="(couponForm?.get('eventBased')?.get('value')?.touched || couponForm?.get('eventBased')?.get('value')?.dirty)">
+                                    <div *ngIf="couponForm?.get('eventBased')?.get('value')?.errors?.required">
+                                      Please select date
+                                    </div>
+                                  </div>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="couponForm?.get('eventBased')?.get('type').value === 'datetimeType'">
+                                  <div class="row">
+                                    <div class="col-md-8">
+                                      <input type="date" class="form-control" formControlName="value" />
+                                      <div class="form-input-error"
+                                        *ngIf="(couponForm?.get('eventBased')?.get('value')?.touched || couponForm?.get('eventBased')?.get('value')?.dirty)">
+                                        <div *ngIf="couponForm?.get('eventBased')?.get('value')?.errors?.required">
+                                          Please select date
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <input type="time" class="form-control" formControlName="time" />
+                                      <div class="form-input-error"
+                                        *ngIf="(couponForm?.get('eventBased')?.get('time')?.touched || couponForm?.get('eventBased')?.get('time')?.dirty)">
+                                        <div *ngIf="couponForm?.get('eventBased')?.get('time')?.errors?.required">
+                                          Please enter time
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </ng-container>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn form-submit-btn" [disabled]="disableAddCouponButton">Submit</button>
+                <button type="button" mat-button matStepperPrevious
+                  [disabled]="!couponForm?.get('eventBased')?.valid">Back</button>
+                <button type="button" mat-button matStepperNext
+                  (click)="markFormGroupAsTouched(couponForm?.get('eventBased'))">Next</button>
+              </mat-step>
+
+              <mat-step [editable]="isEditable" [stepControl]="couponForm?.get('transactionBased')">
+                <ng-template matStepLabel>Transaction Based Rules</ng-template>
+                <div formGroupName="transactionBased">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-4 form-group">
+                          <label for="" class="form-group-label">Start and end date *</label>
+                          <div class="input-group">
+                            <input type="text" class="form-control" #drpInTra="bsDaterangepicker" bsDaterangepicker
+                              formControlName="startAndEndDate"
+                              [bsConfig]="{ isAnimated: true, rangeInputFormat : 'DD-MM-YYYY', dateInputFormat: 'DD-MM-YYYY', showWeekNumbers: false }"
+                              placeholder="dd-mm-yyyy - dd-mm-yyyy" readonly>
+                            <div class="input-group-append">
+                              <span class="input-group-text" (click)="drpInTra.toggle()"
+                                [attr.aria-expanded]="drpInTra.isOpen"><i class="fa fa-calendar"></i></span>
+                            </div>
+                          </div>
+
+                          <div class="form-input-error"
+                            *ngIf="(couponForm?.get('transactionBased')?.get('startAndEndDate')?.touched || couponForm?.get('transactionBased')?.get('startAndEndDate')?.dirty)">
+                            <div *ngIf="couponForm?.get('transactionBased')?.get('startAndEndDate')?.errors?.required">
+                              Please select start and end date
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label class="form-group-label">Condition</label>
+                          <select name="categoryName" class="form-control" formControlName="transactionCondition">
+                            <option value="">Select</option>
+                            <option value="gt">Greater than</option>
+                            <option value="lt">Less than</option>
+                            <option value="eq">Equal To</option>
+                          </select>
+                          <div class="form-input-error"
+                            *ngIf="(couponForm?.get('transactionBased')?.get('transactionCondition')?.touched || couponForm?.get('transactionBased')?.get('transactionCondition')?.dirty)">
+                            <div
+                              *ngIf="couponForm?.get('transactionBased')?.get('transactionCondition')?.errors?.required">
+                              Please select condition
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-group-label">Transactions</label>
+                          <input class="form-control" type="number" name="transactions" formControlName="transactions"
+                            (keyup)="onEnterTransactions()" />
+                          <div class="form-input-error"
+                            *ngIf="(couponForm?.get('transactionBased')?.get('transactions')?.touched || couponForm?.get('transactionBased')?.get('transactions')?.dirty)">
+                            <div *ngIf="couponForm?.get('transactionBased')?.get('transactions')?.errors?.required">
+                              Please enter transactions
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p>And</p>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-md-4 form-group">
+                              <label for="" class="form-group-label">Condition</label>
+                              <select name="categoryName" class="form-control" formControlName="amountCondition">
+                                <option value="">Select</option>
+                                <option value="gt">Greater than</option>
+                                <option value="lt">Less than</option>
+                                <option value="eq">Equal To</option>
+                              </select>
+                              <div class="form-input-error"
+                                *ngIf="(couponForm?.get('transactionBased')?.get('amountCondition')?.touched || couponForm?.get('transactionBased')?.get('amountCondition')?.dirty)">
+                                <div
+                                  *ngIf="couponForm?.get('transactionBased')?.get('amountCondition')?.errors?.required">
+                                  Please select condition
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <label class="form-group-label">Amount</label>
+                              <div class="row">
+                                <div class="col-md-5">
+                                  <select class="form-control" formControlName="indOrSum">
+                                    <option value="individual">Individual</option>
+                                    <option value="sum">Sum</option>
+                                  </select>
+                                </div>
+                                <div class="col-md-7">
+                                  <input class="form-control" type="number" name="amount" formControlName="amount"
+                                    (keyup)="onEnterTransactionsAmount()" />
+                                  <div class="form-input-error"
+                                    *ngIf="(couponForm?.get('transactionBased')?.get('amount')?.touched || couponForm?.get('transactionBased')?.get('amount')?.dirty)">
+                                    <div *ngIf="couponForm?.get('transactionBased')?.get('amount')?.errors?.required">
+                                      Please enter amount
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn form-submit-btn" [disabled]="disableAddCouponButton">Submit</button>
+                <button type="button" mat-button matStepperPrevious
+                  [disabled]="!couponForm?.get('transactionBased')?.valid">Back</button>
+                <button type="button" mat-button matStepperNext
+                  (click)="markFormGroupAsTouched(couponForm?.get('transactionBased'))">Next</button>
+              </mat-step>
+
+              <mat-step [editable]="isEditable">
+                <ng-template matStepLabel>Product Restrictions</ng-template>
+                <div formGroupName="productRestrictions">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label for="">Excluding SKU's</label>&nbsp;
+                          <input type="file" formControlName="excludingSkuFileName"
+                            (change)="onChooseExcludingSkuFile($event)" />
+                        </div>
+                        <div  class="col-md-4">
+                          <a target="_blank" href="https://d3ay9lzldkqm40.cloudfront.net/empay/static/Product_Exclusion.xlsx
+                          "><button class="btn btn-rounded btn-sm"
+                              type="button" style="color:#fff;background-color: #59595C;"><i class="fa fa-arrow-down"
+                                aria-hidden="true"></i>&nbsp;&nbsp;Template</button></a>
+                        </div>
+                        <div *ngIf="files.productsExcluded" class="col-md-4">
+                          <a target="_blank" href="{{files.productsExcluded}}"><button class="btn btn-rounded btn-sm"
+                              type="button" style="color:#fff;background-color: #59595C;"><i class="fa fa-arrow-down"
+                                aria-hidden="true"></i>&nbsp;&nbsp;Download</button></a>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label for="">Including SKU's</label>&nbsp;
+                          <input type="file" formControlName="includingSkuFileName"
+                            (change)="onChooseIncludingSkuFile($event)" />
+                        </div>
+                        <div class="col-md-4">
+                          <a target="_blank" href="https://d3ay9lzldkqm40.cloudfront.net/empay/static/Product_Inclusion.xlsx
+                          "><button class="btn btn-rounded btn-sm"
+                              type="button" style="color:#fff;background-color: #59595C;"><i class="fa fa-arrow-down"
+                                aria-hidden="true"></i>&nbsp;&nbsp;Template</button></a>
+                        </div>
+                        <div *ngIf="files.productsIncluded" class="col-md-4">
+                          <a target="_blank" href="{{files.productsIncluded}}"><button class="btn btn-rounded btn-sm"
+                              type="button" style="color:#fff;background-color: #59595C;"><i class="fa fa-arrow-down"
+                                aria-hidden="true"></i>&nbsp;&nbsp;Download</button></a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <button type="button" mat-button matStepperPrevious>Back</button>
+                <button type="submit" class="btn form-submit-btn" mat-button
+                  [disabled]="disableAddCouponButton">Submit</button>
+              </mat-step>
+
+            </mat-horizontal-stepper>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

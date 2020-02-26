@@ -1,0 +1,102 @@
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="page-title">
+            <h4><img class="title-image" src="assets/images/ad_user.png" alt="Page Title Image" />
+              <p class="title-txt">Manage Users/Add User</p>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <form [formGroup]="addUserForm" (ngSubmit)="onAddUser()">
+               
+                <div class="row">
+                  <div class="col-md-12">
+                    <!-- Default input -->
+                    <label for="" class="form-group-label">Email<span style="color:#BE1535;">*</span></label>
+                    <input class="form-control form-control-sm" type="text" placeholder="Enter email"
+                      formControlName="email">
+                    <div class="form-input-error"
+                      *ngIf="(addUserForm.controls.email.touched || addUserForm.controls.email.dirty)">
+                      <div *ngIf="addUserForm.controls.email.errors?.required">
+                        Please enter email
+                      </div>
+                      <div *ngIf="addUserForm.controls.email.errors?.invalidEmail">
+                        Please enter valid email
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <!-- Default input -->
+                    <label for="" class="form-group-label">Password<span style="color:#BE1535;">*</span></label>
+                    <input class="form-control form-control-sm" type="password" placeholder="Enter password"
+                      formControlName="password">
+                    <div class="form-input-error"
+                      *ngIf="(addUserForm.controls.password.touched || addUserForm.controls.password.dirty)">
+                      <div *ngIf="addUserForm.controls.password.errors?.required">
+                        Please enter password
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="form-group-label">Select Role<span style="color:#BE1535;">*</span></p>
+                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                      formControlName="userRole">
+                      <mat-radio-button value="admin">
+                        Admin
+                      </mat-radio-button>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <mat-radio-button value="partner">
+                        Partner
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-12" class="form-partners">
+                    <!-- Default input -->
+                    <label for="" class="form-group-label">Partners<span class="required">*</span></label>
+                    <ng-select [items]="partnersList" [multiple]="true" bindLabel="name" [selectableGroup]="true"
+                      [closeOnSelect]="false" bindValue="id" formControlName="partners">
+                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                        <input  id="item-{{index}}" type="checkbox" [checked]="item$.selected" />
+                        {{ item.name }}
+                      </ng-template>
+                    </ng-select>
+                    <div class="form-input-error"
+                      *ngIf="(addUserForm.controls.partners.touched || addUserForm.controls.partners.dirty)">
+                      <div *ngIf="addUserForm.controls.partners.errors?.required">
+                        Please select partner
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button class="btn form-submit-btn" type="submit">Submit</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

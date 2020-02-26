@@ -1,0 +1,129 @@
+<!-- <a href="javascript:void(0)" routerLink="/partners/add-partner">Add Partner</a>
+<input type="text" style="padding:8px;margin:15px auto;width:30%;" placeholder="Type to filter the name column..."
+  (keyup)="updateFilter($event)" />
+<ngx-datatable #table class="material" [columns]="columns" columnMode="force" [headerHeight]="50"
+  [footerHeight]="50" rowHeight="auto" [limit]="10" [rows]="rows">
+</ngx-datatable> -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div [ngClass]="action === 'list' ? 'col-md-3' : 'col-md-9'">
+          <app-page-title [pageTitleInfo]="pageTitleInfo"></app-page-title>
+        </div>
+        <div class="col-md-4" *ngIf="action === 'list'">
+          <app-data-table-search></app-data-table-search>
+        </div>
+        <div class="col-md-5 text-right" *ngIf="action === 'list'">
+          <app-data-table-column-filter></app-data-table-column-filter>
+          <button class="btn btn-outline-dark" style="font-size: .8rem;" routerLink="/partners/add-partner">Add Partner
+            <img src="assets/images/ad_partner.png" alt=""> </button>
+        </div>
+        <div class="col-md-3 text-right" *ngIf="action === 'edit'">
+          <button class="btn btn-outline-dark" style="font-size: .8rem;" (click)="backToList()">Partners List
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="partner-list-container" *ngIf="action === 'list'">
+        <ngx-datatable class="material" [rows]="partnersList" [columns]="columns" [columnMode]="'flex'"
+          [sortType]="'single'" [headerHeight]="'auto'" [footerHeight]="50" rowHeight="auto" [limit]="10">
+          <ngx-datatable-column *ngFor="let col of columns" [prop]="col.prop" [name]="col.name" [sortable]="true"
+            [canAutoResize]="true" [resizeable]="true" [flexGrow]="col?.flexSize">
+            <ng-template ngx-datatable-header-template let-sort="sortFn">
+              <span>{{ col.name }}</span>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div [ngSwitch]="col.prop">
+                <span style="text-transform: capitalize;" *ngSwitchCase="'status'">
+                  <ng-container [ngSwitch]="row[col.prop]">
+                    <span class="text-success" *ngSwitchCase="'active'">{{ row[col.prop] }}</span>
+                    <span class="text-danger" *ngSwitchCase="'deleted'">{{ row[col.prop] }}</span>
+                    <span *ngSwitchDefault>{{ row[col.prop] }}</span>
+                  </ng-container>
+                </span>
+                <span *ngSwitchDefault>{{ row[col.prop] }}</span>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Activity" [flexGrow]="2">
+            <ng-template ngx-datatable-header-template>
+              <span>Activity</span>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span class="pr-2 pointer" (click)="openPartnerDetailModal(partnerDetailModal, row)"><img
+                  src="assets/images/zoom.png" alt="view" /> View</span>
+              <span class="pr-2 pointer" (click)="onEditPartner(row)"><img src="assets/images/edit.png" alt="view" /> Edit</span>
+              <span class="pr-2 pointer" (click)="onDeletePartner(row)"><img src="assets/images/delete.png" alt="view" /> Delete</span>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+      <div class="edit-banner-container" *ngIf="action === 'edit'">
+        <app-edit-partner [partnerId]="selectedPartner.id" (backToList)="backToList()"></app-edit-partner>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<ng-template #partnerDetailModal>
+  <div class="modal-header modal-background">
+    <h6 class="modal-title pull-left">Partner Details</h6>
+    <button type="button" class="close pull-right text-white"  aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" >&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <td>{{ selectedPartner?.name }}</td>
+      </tr>
+      <tr>
+        <th>Merchant Id</th>
+        <td>{{ selectedPartner?.merchant_id }}</td>
+      </tr>
+      <tr>
+        <th>Company name</th>
+        <td>{{ selectedPartner?.company_name }}</td>
+      </tr>
+      <tr>
+        <th>Status</th>
+        <td>{{ selectedPartner?.status }}</td>
+      </tr>
+      <tr>
+        <th>Email Address</th>
+        <td>{{ selectedPartner?.email }}</td>
+      </tr>
+      <tr>
+        <th>Phone Number</th>
+        <td>{{ selectedPartner?.phone_no }}</td>
+      </tr>
+      <tr>
+        <th>Website</th>
+        <td>{{ selectedPartner?.website }}</td>
+      </tr>
+
+      <tr>
+        <th>Nature Of Bussiness</th>
+        <td>{{ selectedPartner?.nature_of_business }}</td>
+      </tr>
+      <tr>
+        <th>Address</th>
+        <td>{{ selectedPartner?.address }}</td>
+      </tr>
+    </table>
+
+  </div>
+</ng-template>
+<!-- <i class="fa fa-users pl-2"></i> -->

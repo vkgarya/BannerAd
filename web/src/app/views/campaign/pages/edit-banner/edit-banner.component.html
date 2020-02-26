@@ -1,0 +1,352 @@
+<div class="row">
+  <div class="col-md-12">
+    <form [formGroup]="editBannerForm" (ngSubmit)="onEditBanner()">
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Default input -->
+          <label for="" class="form-group-label">Partner<span style="color:#BE1535;">*</span></label>
+          <select class="form-control" formControlName="partner">
+            <option value="">Select partner</option>
+            <option *ngFor="let partner of partnersList" [value]="partner.id">{{ partner.name }}</option>
+          </select>
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('partner')?.touched || editBannerForm.get('partner')?.dirty)">
+            <div *ngIf="editBannerForm.get('partner')?.errors?.required">
+              Please select partner
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Default input -->
+          <label for="" class="form-group-label">Select Country<span style="color:#BE1535;">*</span></label>
+          <select class="form-control" formControlName="country">
+            <option value="all">All</option>
+            <option value="india">India</option>
+            <option value="srilanka">Srilanka</option>
+            <option value="uae">UAE</option>
+          </select>
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('country')?.touched || editBannerForm.get('country')?.dirty)">
+            <div *ngIf="editBannerForm.get('country')?.errors?.required">
+              Please select country
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="" class="form-group-label">Select State<span style="color:#BE1535;">*</span></label>
+          <select class="form-control" formControlName="state">
+            <option value="all">All</option>
+            <option value="dubai">Dubai</option>
+            <option value="abudhabi">Abu Dhabi</option>
+            <option value="sharjah">Sharjah</option>
+          </select>
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('state')?.touched || editBannerForm.get('state')?.dirty)">
+            <div *ngIf="editBannerForm.get('state')?.errors?.required">
+              Please select state
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label for="" class="form-group-label">Click Type<span style="color:#BE1535;">*</span></label>
+          <select class="form-control" formControlName="clickType" (change)="onChangeClickType()">
+            <option value="">Select</option>
+            <option value="Inapp">Inapp</option>
+            <option value="Native">Native</option>
+            <option value="External">External</option>
+          </select>
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('clickType')?.touched || editBannerForm.get('clickType')?.dirty)">
+            <div *ngIf="editBannerForm.get('clickType')?.errors?.required">
+              Please select click type
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <!-- Default input -->
+          <label for="" class="form-group-label">Target Url<span style="color:#BE1535;">*</span> (enter max 256
+            characters
+            only)</label>
+          <input class="form-control" type="url" placeholder="Enter target url" maxlength="256"
+            formControlName="targetUrl">
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('targetUrl')?.touched || editBannerForm.get('targetUrl')?.dirty)">
+            <div *ngIf="editBannerForm.get('targetUrl')?.errors?.required">
+              Please enter target url
+            </div>
+            <div *ngIf="editBannerForm.get('targetUrl')?.errors?.invalidUrl">
+              Please enter valid target url
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Default input -->
+          <label for="" class="form-group-label">Status<span style="color:#BE1535;">*</span></label>
+          <select class="form-control" formControlName="status">
+            <option value="">Select</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="suspend">Suspend</option>
+            <option value="delete">Delete</option>
+          </select>
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('status')?.touched || editBannerForm.get('status')?.dirty)">
+            <div *ngIf="editBannerForm.get('status')?.errors?.required">
+              Please select status
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="" class="form-group-label">Select Genre<span style="color:#BE1535;">*</span></label>
+          <select class="form-control" formControlName="genre">
+            <option value="all">All</option>
+            <option value="entertainmentlovers">Entertainment Lovers</option>
+            <option value="livetvusers">Live Tv Users</option>
+            <option value="travellovers">Travel Lovers</option>
+          </select>
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('genre')?.touched || editBannerForm.get('genre')?.dirty)">
+            <div *ngIf="editBannerForm.get('genre')?.errors?.required">
+              Please select genre
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Default input -->
+          <label for="" class="form-group-label">Nationality<span style="color:#BE1535;">*</span></label>
+          <select class="form-control" formControlName="nationality">
+            <option value="all">All</option>
+            <option value="bangladesh">Bangladesh</option>
+            <option value="dubai">Dubai</option>
+            <option value="india">India</option>
+            <option value="pakistan">Pakistan</option>
+            <option value="srilanka">Srilanka</option>
+          </select>
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('nationality')?.touched || editBannerForm.get('nationality')?.dirty)">
+            <div *ngIf="editBannerForm.get('nationality')?.errors?.required">
+              Please select nationality
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="" class="form-group-label">Priority<span style="color:#BE1535;">*</span></label>
+          <select class="form-control" formControlName="priority">
+            <option value="0">None</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('priority')?.touched || editBannerForm.get('priority')?.dirty)">
+            <div *ngIf="editBannerForm.get('priority')?.errors?.required">
+              Please select priority
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <!-- Default input -->
+          <label for="" class="form-group-label">Age group<span style="color:#BE1535;">*</span></label>
+          <div formArrayName="ageGroups">
+            <ng-container *ngFor="let ageGroup of editBannerForm.get('ageGroups')?.controls; let i=index;">
+              <mat-checkbox class="mr-3" [formControlName]="i" [value]="(i + 1)">{{ ageGroups[i]?.name }}
+              </mat-checkbox>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="" class="form-group-label">Gender<span style="color:#BE1535;">*</span></label>
+          <div formArrayName="genders">
+            <ng-container *ngFor="let gender of editBannerForm.get('genders')?.controls; let i=index;">
+              <mat-checkbox class="mr-3" [formControlName]="i" [value]="genders[i]?.value">{{ genders[i]?.name }}
+              </mat-checkbox>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+        <div class="col-md-12">
+          <p class="form-group-label">Campaign Limit</p>
+        </div>
+      </div>
+
+      <div class="row" formGroupName="campaignLimit">
+        <div class="col-md-3 mt-1">
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+            formControlName="limit">
+            <mat-radio-button value="clicks">
+              Clicks
+            </mat-radio-button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-radio-button value="amount">
+              Amount (in AED)
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="col-md-4">
+          <input type="number" class="form-control" placeholder="Enter value here" formControlName="value">
+          <div class="form-input-error"
+            *ngIf="(editBannerForm.get('campaignLimit')?.get('value')?.touched || editBannerForm.get('campaignLimit')?.get('value')?.dirty)">
+            <div *ngIf="editBannerForm.get('campaignLimit')?.get('value')?.errors?.required">
+              Please enter value
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-xs-12 col-12 col-md-4 form-group mt-3">
+              <label for="" class="form-group-label">Start and end date</label>
+              <div class="input-group">
+                <input type="text" class="form-control" #drp="bsDaterangepicker" bsDaterangepicker
+                  [bsConfig]="{ isAnimated: true, rangeInputFormat : 'DD-MM-YYYY', dateInputFormat: 'DD-MM-YYYY', showWeekNumbers: false, adaptivePosition: true }"
+                  formControlName="startEndDate" placeholder="dd-mm-yyyy - dd-mm-yyyy" readonly>
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="drp.toggle()" [attr.aria-expanded]="drp.isOpen"><i
+                      class="fa fa-calendar"></i></span>
+                </div>
+              </div>
+              <div class="form-input-error"
+                *ngIf="(editBannerForm.get('startEndDate')?.touched || editBannerForm.get('startEndDate')?.dirty)">
+                <div *ngIf="editBannerForm.get('startEndDate')?.errors?.required">
+                  Please select start and end date
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Banner Campaign Files</h6>
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-sm btn-primary add-format-more" (click)="addMoreBannerFiles()">
+                + Add more
+              </button>
+            </div>
+          </div>
+          <ng-container *ngFor="let bannerFile of bannerDetails?.banners; let i = index">
+            <div class="row" *ngIf="i%4 === 0">
+              <div class="col-md-3">
+                <div class="banner-image-container">
+                  <img class="bannerFileImage" [src]="bannerFile?.link" alt="banner image">
+                  <br>
+                  <button class="btn btn-outline-dark mt-1" style="font-size: .8rem;"
+                    (click)="onRemoveExistingBanner(i)">Remove</button>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="bannerDetails?.banners[i + 1]">
+                <div class="banner-image-container">
+                  <img class="bannerFileImage" [src]="bannerDetails?.banners[i + 1]?.link" alt="banner image">
+                  <br>
+                  <button class="btn btn-outline-dark mt-1" style="font-size: .8rem;"
+                    (click)="onRemoveExistingBanner(i + 1)">Remove</button>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="bannerDetails?.banners[i+2]">
+                <div class="banner-image-container">
+                  <img class="bannerFileImage" [src]="bannerDetails?.banners[i + 2]?.link" alt="banner image">
+                  <br>
+                  <button class="btn btn-outline-dark mt-1" style="font-size: .8rem;"
+                    (click)="onRemoveExistingBanner(i + 2)">Remove</button>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="bannerDetails?.banners[i + 3]">
+                <div class="banner-image-container">
+                  <img class="bannerFileImage" [src]="bannerDetails?.banners[i + 3]?.link" alt="banner image">
+                  <br>
+                  <button class="btn btn-outline-dark mt-1" style="font-size: .8rem;"
+                    (click)="onRemoveExistingBanner(i + 3)">Remove</button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+
+      <br />
+
+      <div class="row">
+        <div class="col-md-10">
+          <div class="banner-file-container" formArrayName="bannerFiles">
+            <ng-container *ngFor="let ageGroup of editBannerForm.get('bannerFiles')?.controls; let i=index;">
+              <div class="row" [formGroupName]="i">
+                <div class="col-md-6">
+                  <!-- Default input -->
+                  <label for="" class="form-group-label">Select Format<span style="color:#BE1535;">*</span></label>
+                  <select class="form-control" formControlName="format" (change)="onSelectBannerFormat(i)">
+                    <option value="">Select</option>
+                    <option value="120*40">120*40</option>
+                    <option value="240*40">240*40</option>
+                    <option value="320*240">320*240</option>
+                    <option value="240*320">240*320</option>
+                    <option value="40*120">40*120</option>
+                    <option value="40*240">40*240</option>
+                  </select>
+                  <div class="form-input-error"
+                    *ngIf="(editBannerForm.get('bannerFiles')?.controls[i].get('format')?.touched || editBannerForm.get('bannerFiles')?.controls[i].get('format')?.dirty)">
+                    <div *ngIf="editBannerForm.get('bannerFiles')?.controls[i].get('format')?.errors?.required">
+                      Please select format
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="file" style="margin-top: 2rem;" formControlName="fileName"
+                    (change)="onChooseFile($event, i)">
+                  <i class="fa fa-trash ml-3" (click)="onRemoveBannerFile(i)"
+                    *ngIf=" editBannerForm.get('bannerFiles')?.controls?.length > 1"></i>
+                  <div class="form-input-error"
+                    *ngIf="(editBannerForm.get('bannerFiles')?.controls[i].get('fileName')?.touched || editBannerForm.get('bannerFiles')?.controls[i].get('fileName')?.dirty)">
+                    <div *ngIf="editBannerForm.get('bannerFiles')?.controls[i].get('fileName')?.errors?.required">
+                      Please choose the file
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <button class="btn form-submit-btn" type="submit" [disabled]="disableEditBannerButton">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

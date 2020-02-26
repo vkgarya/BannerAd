@@ -1,0 +1,148 @@
+<!-- <p>banner-list works!</p>
+<a href="javascript:void(0)" routerLink="/campaign/add-banner">Add Banner Campaign</a>  -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div [ngClass]="action === 'list' ? 'col-md-3' : 'col-md-9'">
+          <app-page-title [pageTitleInfo]="pageTitleInfo"></app-page-title>
+        </div>
+        <div class="col-md-4" *ngIf="action === 'list'">
+          <app-data-table-search></app-data-table-search>
+        </div>
+        <div class="col-md-5 text-right" *ngIf="action === 'list'">
+          <app-data-table-column-filter></app-data-table-column-filter>
+          <button class="btn btn-outline-dark" style="font-size: .8rem;" routerLink="/campaign/add-banner">Add Banner
+            Campaign
+            <img src="assets/images/add_compaign.png" alt=""> </button>
+        </div>
+        <div class="col-md-3 text-right" *ngIf="action === 'edit'">
+          <button class="btn btn-outline-dark" style="font-size: .8rem;" (click)="backToList()">
+            Banner campaign list
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="banner-list-container" *ngIf="action === 'list'">
+        <ngx-datatable class="material" [rows]="bannerList" [columns]="columns" [columnMode]="'flex'"
+          [sortType]="'single'" [headerHeight]="'auto'" [footerHeight]="50" rowHeight="auto" [limit]="10">
+          <ngx-datatable-column *ngFor="let col of columns" [prop]="col.prop" [name]="col.name" [sortable]="true"
+            [canAutoResize]="true" [resizeable]="true" [flexGrow]="col?.flexSize">
+            <ng-template ngx-datatable-header-template let-sort="sortFn">
+              <span>{{ col.name }}</span>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div [ngSwitch]="col.prop">
+                <span *ngSwitchCase="'started_on'">{{ row[col.prop] | date }}</span>
+                <span *ngSwitchCase="'closed_on'">{{ row[col.prop] | date }}</span>
+                <img [src]="row[col.prop][0]['link']" alt="Image" *ngSwitchCase="'banners'"
+                  style="width: 100px;height: 35px" />
+                <span style="text-transform: capitalize;" *ngSwitchCase="'status'">
+                  <ng-container [ngSwitch]="row[col.prop]">
+                    <span class="text-success" *ngSwitchCase="'active'">{{ row[col.prop] }}</span>
+                    <span class="text-danger" *ngSwitchCase="'deleted'">{{ row[col.prop] }}</span>
+                    <span *ngSwitchDefault>{{ row[col.prop] }}</span>
+                  </ng-container>
+                </span>
+                <span *ngSwitchDefault>{{ row[col.prop] }}</span>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Activity" [flexGrow]="4">
+            <ng-template ngx-datatable-header-template>
+              <span>Activity</span>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span class="pr-2 pointer" (click)="openBannerDetailModal(bannerDetailModal, row)"><img
+                  src="assets/images/zoom.png" alt="view" /> View</span>
+              <span class="pr-2 pointer" (click)="onEditBanner(row)"><img src="assets/images/edit.png" alt="view" /> Edit</span>
+              <span class="pr-2 pointer" (click)="onDeleteBanner(row)"><img src="assets/images/delete.png" alt="view" /> Delete</span>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+
+      <div class="edit-banner-container" *ngIf="action === 'edit'">
+        <app-edit-banner [bannerId]="selectedBanner.id" (backToList)="backToList()"></app-edit-banner>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #bannerDetailModal>
+  <div class="modal-header modal-background">
+    <h6 class="modal-title pull-left">Banner Details</h6>
+    <button type="button" class="close pull-right text-white" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <td>{{ selectedBanner?.id }}</td>
+      </tr>
+      <tr>
+        <th>Country</th>
+        <td>{{ selectedBanner?.country }}</td>
+      </tr>
+      <tr>
+        <th>State</th>
+        <td>{{ selectedBanner?. state }}</td>
+      </tr>
+      <tr>
+        <th>Click Type</th>
+        <td>{{ selectedBanner?.click_type }}</td>
+      </tr>
+      <tr>
+        <th>Target Url</th>
+        <td>{{ selectedBanner?.click_url }}</td>
+      </tr>
+      <tr>
+        <th>Genre</th>
+        <td>{{ selectedBanner?.genre }}</td>
+      </tr>
+      <tr>
+        <th>Nationality</th>
+        <td>{{ selectedBanner?.nationality }}</td>
+      </tr>
+      <tr>
+        <th>Priority</th>
+        <td>{{ selectedBanner?.priority }}</td>
+      </tr>
+      <tr>
+        <th>Balance Amount(In AED)</th>
+        <td>{{ selectedBanner?.balance_amount }}</td>
+      </tr>
+      <tr>
+        <th>Balance Clicks</th>
+        <td>{{ selectedBanner?.balance_clicks }}</td>
+      </tr>
+      <tr>
+        <th>From</th>
+        <td>{{ selectedBanner?.started_on | date }}</td>
+      </tr>
+      <tr>
+        <th>To</th>
+        <td>{{ selectedBanner?.closed_on | date }}</td>
+      </tr>
+      <tr>
+        <th>Status</th>
+        <td><span style="text-transform: capitalize;">{{ selectedBanner?.status }}</span></td>
+      </tr>
+    </table>
+    <h6>Banners</h6>
+    <ng-container *ngFor="let banner of selectedBanner?.banners; let i = index">
+      <div class="row" *ngIf="i % 2 === 0">
+        <div class="col-md-6">
+          <img class="banner-image" [src]="banner?.link" alt="banner" style="margin-bottom: 10px" />
+        </div>
+        <div class="col-md-6" *ngIf="selectedBanner?.banners[i + 1]">
+          <img class="banner-image" [src]="selectedBanner?.banners[i + 1]?.link" alt="banner" style="margin-bottom: 10px" />
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>

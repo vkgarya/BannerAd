@@ -1,0 +1,158 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-title">
+                        <h4><img class="title-image" src="assets/images/referrals.png" alt="Page Title Image" />
+                            <p class="title-txt">Campaigns/Referrals/Add Referral</p>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  
+        <div class="page-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="">
+
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Referral Description<span style="color:#BE1535;">*</span></label>
+                                <div id="addDescription">
+                                    <input class="form-control form-control-sm" type="text"
+                                        placeholder="Enter Referral Description" style="margin-top: 10px;">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div id="couponDescButtonDiv">
+                                    <button class="btn btn-sm btn-rounded" name="addDesbtn" type="button"
+                                        style="color:#fff;background-color: #59595C;margin-top: 41px;"><i
+                                            class="fa fa-plus" style="margin-right: 10px;"></i>Add More</button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Referrer<span style="color:#BE1535;">*</span></label>
+                            </div>
+                        </div>
+                
+                
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input type="radio" value="amount" name="referrer"
+                                    id="idRefererDiscountAmountRadio">&nbsp;&nbsp;<label for="">Amount($)</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control form-control-sm" name="referrer_points" value=""
+                                    placeholder="Enter Amount in AED" id="idRefererDiscountAmountTxt"
+                                    style="display: none;">
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input type="radio" value="point" name="referrer"
+                                    id="idRefererDiscountPointsRadio">&nbsp;&nbsp;<label for="">Points</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control form-control-sm" name="referrer_points"
+                                    value="" placeholder="Enter points" id="idRefererDiscountPointsTxt"
+                                    style="display: none;">
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input type="radio" value="discount" name="referrer"
+                                    id="idRefererDiscountPercentRadio">&nbsp;&nbsp;<label for="">Discount(%)</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control form-control-sm" placeholder="Enter Discount %"
+                                    name="" value="" max="100" min="0" id="idRefererDiscountPercentTxt"
+                                    style="display: none;" />
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control form-control-sm" name="referrer_points" value=""
+                                    placeholder="Enter Max Discount Amount in AED" id="idRefererMaxDiscountPercentTxt"
+                                    style="display: none;" />
+                            </div>
+                        </div>
+                        <br>
+                
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Referee<span style="color:#BE1535;">*</span></label>
+                            </div>
+                        </div>
+                
+                
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input type="radio" value="amount" name="referrer"
+                                    id="idRefereeDiscountAmountRadio">&nbsp;&nbsp;<label for="">Amount($)</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control form-control-sm" name="referee_points" value=""
+                                    placeholder="Enter Amount in AED" id="idRefereeDiscountAmountTxt"
+                                    style="display: none;">
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input type="radio" value="point" name="referrer"
+                                    id="idRefereeDiscountPointsRadio">&nbsp;&nbsp;<label for="">Points</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control form-control-sm" name="referee_points" value=""
+                                    placeholder="Enter points" id="idRefereeDiscountPointsTxt" style="display: none;">
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Default input -->
+                                <label for="">Start Date<span style="color:#BE1535;">*</span></label>
+                                <input placeholder="Selected date" type="text" id="date-picker-example"
+                                    class="form-control form-control-sm datepicker">
+                
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">End Date<span style="color:#BE1535;">*</span></label>
+                                <input placeholder="Selected date" type="text" id="date-picker-example"
+                                    class="form-control form-control-sm datepicker">
+                            </div>
+                        </div>
+                        <br>
+                
+                
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button class="btn form-submit-btn" type="submit"
+                                    style="color:#fff;background-color: #59595C;border-radius:5px;text-transform: capitalize;font-size:16px;padding: 8px 25px;letter-spacing: 1px;">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  
+
+
+
+
