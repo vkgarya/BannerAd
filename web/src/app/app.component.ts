@@ -10,7 +10,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class AppComponent {
   title = 'Campaign';
 
-  constructor(public readonly _loaderService: LoaderService, private readonly _spinner: NgxSpinnerService) {
+  constructor(public readonly _loaderService: LoaderService, private readonly _spinner: NgxSpinnerService ) {
     //this._spinner.show();
     this._loaderService.isLoading.pipe().subscribe((isLoading) => {
       if (!isLoading) {

@@ -16,10 +16,19 @@ import { PageTitleComponent } from './components/page-title/page-title.component
 import { DataTableSearchComponent } from './components/data-table-search/data-table-search.component';
 import { DataTableColumnFilterComponent } from './components/data-table-column-filter/data-table-column-filter.component';
 
+import { ToastrComponent } from './components/toastr/toastr.component';
+
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
+import { MatDialogModule  } from '@angular/material/dialog';
+
 const DECLARATIONS = [
   PageTitleComponent,
   DataTableSearchComponent,
-  DataTableColumnFilterComponent
+  DataTableColumnFilterComponent,
+  ToastrComponent,
+  ConfirmDialogComponent,
+  AlertDialogComponent,
 ];
 const IMPORTS = [
   FormsModule,
@@ -32,12 +41,13 @@ const IMPORTS = [
   MatInputModule,
   MatCheckboxModule,
   MatRadioModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule 
 ];
 
 @NgModule({
   declarations: [
-    DECLARATIONS
+    DECLARATIONS,
   ],
   imports: [
     CommonModule,
@@ -48,6 +58,7 @@ const IMPORTS = [
     DECLARATIONS,
     IMPORTS,
     ModalModule
-  ]
+  ],
+  entryComponents: [ConfirmDialogComponent, AlertDialogComponent],
 })
 export class SharedModule { }

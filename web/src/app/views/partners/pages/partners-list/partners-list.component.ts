@@ -4,6 +4,9 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
+import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { AlertDialogComponent, AlertDialogModel } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-partners-list',
@@ -32,7 +35,7 @@ export class PartnersListComponent implements OnInit {
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
   modalRef: BsModalRef;
 
-  constructor(private readonly _partnerService: PartnersService, private readonly modalService: BsModalService) { }
+  constructor(private readonly _partnerService: PartnersService, private readonly modalService: BsModalService, private readonly dialog: MatDialog ) { }
 
   ngOnInit() {
     this.getPartnersList();
@@ -83,14 +86,32 @@ export class PartnersListComponent implements OnInit {
 
 
   onDeletePartner(partner: any): void {
-    if (confirm('Are you sure want to delete?')) {
-      this._partnerService.deletePartner(partner.id).subscribe(res => {
-        alert("Partner removed successfully!");
-        this.getPartnersList();
-      });
-    }
+    this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: new ConfirmDialogModel(`Confirm Deletion`, `Are you sure want to delete?`)
+    }).afterClosed().subscribe(confirmDialogResult => {
+      if (confirmDialogResult) { 
+          this._partnerService.deletePartner(partner.id).subscribe(res => {
+          // alert("Partner removed successfully!");
+          this.dialog.open(AlertDialogComponent, {
+            maxWidth: "400px",
+            data: new AlertDialogModel(`Information`, `Partner removed successfully!`)
+          }).afterClosed().subscribe(alertDialogResult => {
+            if (alertDialogResult) { 
+              this.getPartnersList();
+            }
+          });
+          this.getPartnersList();
+        });
+      }
+    });
+    // if (confirm('Are you sure want to delete?')) {
+    //   this._partnerService.deletePartner(partner.id).subscribe(res => {
+    //     alert("Partner removed successfully!");
+    //     this.getPartnersList();
+    //   });
+    // }
   }
-
 
   backToList(): void { 
     this.pageTitleInfo.title = "Partners";

@@ -41,4 +41,9 @@ export class PartnersService {
   deletePartner(partnerId: number): Observable<any> {
     return this._http.delete(`${apiURL}/partner/${partnerId}`, { withCredentials: true });
   }
+
+  //Vijay
+  getBannerAd(bannerData: any): Observable<any> { 
+    return this._http.post(`http://api.empay.we4global.com:8080/v1/ad-request`,bannerData, { withCredentials: true });
+  }
 }

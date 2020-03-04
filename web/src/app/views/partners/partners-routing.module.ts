@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PartnersComponent } from './partners.component';
 import { PartnersListComponent } from './pages/partners-list/partners-list.component';
 import { AddPartnerComponent } from './pages/add-partner/add-partner.component';
+import { BannerDemoComponent } from './pages/banner-demo/banner-demo.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'add-partner',
         component: AddPartnerComponent
+      },
+      {
+        path: 'banner-demo',
+        component: BannerDemoComponent
       },
       {
         path: '',

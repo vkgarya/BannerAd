@@ -12,7 +12,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 
 const DECLARATIONS = [
-  LayoutComponent, HeaderComponent, FooterComponent, SideNavComponent
+  LayoutComponent, HeaderComponent, FooterComponent, SideNavComponent, 
 ];
 
 const IMPORTS = [

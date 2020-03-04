@@ -1,0 +1,12 @@
+<ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" interval="5000" [keyboard]="true"
+    [pauseOnHover]="true" [wrap]="true" [activeId]="'secondSlide'" class="carousel-container">
+    <ng-template ngbSlide *ngFor="let data of bannerData?.results">
+        <div class="picsum-img-wrapper">
+            <a href="{{data.click_url}}">
+                <img src="{{data.banners[0].link}}" alt="{{data.banners[0].link}}" width="250px" height="250px">
+            </a>
+        </div>
+        <div class="carousel-caption">
+        </div>
+    </ng-template>
+</ngb-carousel>
